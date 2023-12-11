@@ -3,6 +3,8 @@ import './App.css';
 import Header from './components/fix/Header';
 import { Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
