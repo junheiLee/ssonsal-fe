@@ -31,7 +31,7 @@ const Header = () => {
                                 
                                 {/* menu start */}
                                 <ul className="nav">
-                                    <li><Link to="#gameDetail">Game</Link></li>
+                                    <li><Link to="./game/gameDetail">Game</Link></li>
                                     <li><Link to="#features">Rank</Link></li>
                                     <li><Link to="#work-process">Teams</Link></li>
                                     <li><Link to="#testimonials">MyPage</Link></li>
