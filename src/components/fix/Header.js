@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate,Link } from 'react-router-dom';
 import './Header.css';
 import '../../index.css';
 
@@ -7,10 +7,13 @@ import '../../index.css';
 const Header = () => {
 
     let navigate = useNavigate();
-    const [isActive, setIsActive] = useState(false);
 
-    const handleMenuClick = () => {
-        setIsActive(!isActive);
+
+    const menuClick = () => {
+        const nav = document.querySelector('.header-area .nav');
+        if (nav) {
+            nav.style.display = (nav.style.display === 'none' || nav.style.display === '') ? 'block' : 'none';
+        }
     };
 
     return (
@@ -28,14 +31,14 @@ const Header = () => {
                                 
                                 {/* menu start */}
                                 <ul className="nav">
-                                    <li><a href="#gameDetail">Game</a></li>
-                                    <li><a href="#features">Rank</a></li>
-                                    <li><a href="#work-process">Teams</a></li>
-                                    <li><a href="#testimonials">MyPage</a></li>
-                                    <li><a href="#testimonials">Login</a></li>
+                                    <li><Link to="./game/gameDetail">Game</Link></li>
+                                    <li><Link to="#features">Rank</Link></li>
+                                    <li><Link to="#work-process">Teams</Link></li>
+                                    <li><Link to="#testimonials">MyPage</Link></li>
+                                    <li><Link to="#testimonials">Login</Link></li>
 
                                 </ul>
-                                <a className='menu-trigger'>
+                                <a className='menu-trigger' onClick={menuClick}>
                                     <span>Menu</span>
                                 </a>
                                 {/* menu end */}
