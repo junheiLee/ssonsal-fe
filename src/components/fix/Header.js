@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate,Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Header.css';
-import '../../index.css';
+import './index.css';
 
 
 const Header = () => {
-
-    let navigate = useNavigate();
-
 
     const menuClick = () => {
         const nav = document.querySelector('.header-area .nav');
@@ -24,23 +20,23 @@ const Header = () => {
                         <div className="col-12">
                             <nav className="main-nav">
                                 {/* logo start */}
-                                <a href="/" className="logo">
-                                    <img src="/logo.svg" alt="쏜살" />
-                                </a>
+                                <Link to="/" className="logo">
+                                    <img src={process.env.PUBLIC_URL + '/assets/logo.svg'} alt="쏜살" />
+                                </Link>
                                 {/* logo end */}
                                 
                                 {/* menu start */}
                                 <ul className="nav">
-                                    <li><Link to="./game/gameDetail">Game</Link></li>
+                                    <li><Link to="/for-team">Game</Link></li>
                                     <li><Link to="#features">Rank</Link></li>
-                                    <li><Link to="#work-process">Teams</Link></li>
-                                    <li><Link to="#testimonials">MyPage</Link></li>
-                                    <li><Link to="#testimonials">Login</Link></li>
+                                    <li><Link to="/teams">Teams</Link></li>
+                                    <li><Link to="/user/mypage">MyPage</Link></li>
+                                    <li><Link to="/user/login">Login</Link></li>
 
                                 </ul>
-                                <a className='menu-trigger' onClick={menuClick}>
+                                <p className='menu-trigger' onClick={menuClick}>
                                     <span>Menu</span>
-                                </a>
+                                </p>
                                 {/* menu end */}
                             </nav>
                         </div>
