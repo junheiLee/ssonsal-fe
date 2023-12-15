@@ -1,0 +1,23 @@
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optionally set the height to fill the entire viewport */
+  }
+
+.errorDesign{
+    position: relative;
+    display: inline-block;
+}
+.errorMessage{
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust background color and opacity as needed */
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
