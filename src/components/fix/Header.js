@@ -20,9 +20,9 @@ const Header = () => {
                         <div className="col-12">
                             <nav className="main-nav">
                                 {/* logo start */}
-                                <a href="/" className="logo">
-                                    <img src="/logo.svg" alt="쏜살" />
-                                </a>
+                                <Link to="/" className="logo">
+                                    <img src={process.env.PUBLIC_URL + '/assets/logo.svg'} alt="쏜살" />
+                                </Link>
                                 {/* logo end */}
                                 
                                 {/* menu start */}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import './css/index.css';
-import './css/Create.css';
+import '../../styles/team/index.css';
+import '../../styles/team/Create.css';
 import { useNavigate } from 'react-router-dom';
 
 const TeamForm = () => {

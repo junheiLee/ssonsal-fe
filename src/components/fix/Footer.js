@@ -22,7 +22,7 @@ const Footer = () => {
               <p className="footer-explan">우리 동네 쏜살같은 풋살 매칭</p>
 
               <div className="copywrite-text mb-5">
-                <p className="mb-0"><Link to={"/"} className="ml-1 footer-img"><img src={process.env.PUBLIC_URL + '/logo.svg'} alt='footer' /></Link></p>
+                <p className="mb-0"><Link to={"/"} className="ml-1 footer-img"><img src={process.env.PUBLIC_URL + '/assets/logo.svg'} alt='footer' /></Link></p>
               </div>
 
       
@@ -69,7 +69,7 @@ const Footer = () => {
                 <ul className="footer-ul footer-git">
                   <li><Link to="#"><i><FontAwesomeIcon icon={faGithub} /></i>박경리</Link></li>
                   <li><Link to="#"><i><FontAwesomeIcon icon={faGithub} /></i>임승연</Link></li>
-                  <li><Link to="#"><i><FontAwesomeIcon icon={faGithub} /></i>전준형</Link></li>
+                  <li><Link to="https://github.com/jjy0326"><i><FontAwesomeIcon icon={faGithub} /></i>전준형</Link></li>
                 </ul>
               </div>
             </div>
