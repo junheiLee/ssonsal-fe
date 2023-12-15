@@ -9,14 +9,14 @@ import Loading from './components/fix/Loading';
 
 import Main from './pages/Main';
 
-const TeamList = lazy(() => import('./components/team/TeamList'));
-const TeamDetail = lazy(() => import('./components/team/TeamDetail'));
-const TeamManager = lazy(() => import('./components/team/TeamManager'));
-const TeamForm = lazy(() => import('./components/team/TeamForm'));
-const TeamEdit = lazy(() => import('./components/team/TeamEdit'));
+const TeamList = lazy(() => import('./pages/team/TeamList'));
+const TeamDetail = lazy(() => import('./pages/team/TeamDetail'));
+const TeamManager = lazy(() => import('./pages/team/TeamManager'));
+const TeamForm = lazy(() => import('./pages/team/TeamForm'));
+const TeamEdit = lazy(() => import('./pages/team/TeamEdit'));
 
 
-function App() {
+const App = () => {
   return (
     <div className="App">
 
@@ -29,7 +29,6 @@ function App() {
             <Route path='/teams/:id/managers' element={<TeamManager />} />
           </Route>
 
-          <Route path='/test' element={<Loading />} />
           <Route path='*' element={<Error />} />
           <Route path='/teams/form' element={<TeamForm />} />
           <Route path='/teams/:id/edit' element={<TeamEdit />} />
