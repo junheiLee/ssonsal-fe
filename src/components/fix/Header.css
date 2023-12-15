@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700,900");
 
 
+
 .header-area {
-    position: fixed;
+  margin-top: 20px;
     top: 30px;
     left: 0px;
     right: 0px;
@@ -19,6 +20,8 @@
     border-radius: 40px;
     min-height: 80px;
     background: #fff;
+    position: relative;
+    margin-bottom: 30px;
   }
   
   .header-area .main-nav .logo {
@@ -73,6 +76,7 @@
     line-height: 40px;
     border: transparent;
     letter-spacing: 1px;
+    text-decoration: none;
   }
   
   .header-area .main-nav .nav li a:hover {
@@ -324,5 +328,14 @@
     .header-area .main-nav .nav {
       display: flex !important;
     }
+    
   }
   
+
+
+  @media (max-width: 992px) {
+    .main-content{
+      margin-top: 20px;
+    }
+    
+  }
