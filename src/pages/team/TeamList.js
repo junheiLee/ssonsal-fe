@@ -2,8 +2,8 @@ import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-boot
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './css/List.css';
-import './css/index.css';
+import '../../styles/team/List.css';
+import '../../styles/team/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -91,7 +91,7 @@ const List = () => {
 
         <Container className=" mt-5">
           <div className="listsheader">
-            <p><img src={process.env.PUBLIC_URL + './ball.png'} alt='축구공' /></p>
+            <p><img src={process.env.PUBLIC_URL + '/assets/ball.png'} alt='축구공' /></p>
             <p>
               <span>팀명</span>
               <span>팀 연령대</span>

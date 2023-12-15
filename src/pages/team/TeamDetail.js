@@ -2,8 +2,8 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './css/index.css';
-import './css/Detail.css';
+import '../../styles/team/index.css';
+import '../../styles/team/Detail.css';
 import { useParams } from 'react-router-dom';
 
 
