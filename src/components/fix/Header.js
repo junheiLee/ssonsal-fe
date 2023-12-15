@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate,Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Header.css';
 import './index.css';
 
 
 const Header = () => {
-
-    let navigate = useNavigate();
-
 
     const menuClick = () => {
         const nav = document.querySelector('.header-area .nav');
@@ -38,9 +34,9 @@ const Header = () => {
                                     <li><Link to="/user/login">Login</Link></li>
 
                                 </ul>
-                                <a className='menu-trigger' onClick={menuClick}>
+                                <p className='menu-trigger' onClick={menuClick}>
                                     <span>Menu</span>
-                                </a>
+                                </p>
                                 {/* menu end */}
                             </nav>
                         </div>
