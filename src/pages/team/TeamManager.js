@@ -25,7 +25,7 @@ const Manager = () => {
   const getManage = async () => {
     try {
       const response = await axios.get('http://localhost:9000/api/teams/' + id + "/managers");
-      setLeader(response.data.data.Leader);
+      setLeader(response.data.data.teamLeader);
       setApplies(response.data.data.applies);
       setRejects(response.data.data.rejects);
       setMembers(response.data.data.members);
@@ -33,6 +33,7 @@ const Manager = () => {
       navigate('/*', { replace: true });
     } finally {
       setLoading(false);
+      
     }
   }
 
