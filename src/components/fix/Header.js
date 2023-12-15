@@ -31,11 +31,11 @@ const Header = () => {
                                 
                                 {/* menu start */}
                                 <ul className="nav">
-                                    <li><Link to="#gameDetail">Game</Link></li>
+                                    <li><Link to="/for-team">Game</Link></li>
                                     <li><Link to="#features">Rank</Link></li>
-                                    <li><Link to="#work-process">Teams</Link></li>
-                                    <li><Link to="#testimonials">MyPage</Link></li>
-                                    <li><Link to="#testimonials">Login</Link></li>
+                                    <li><Link to="/teams">Teams</Link></li>
+                                    <li><Link to="/user/mypage">MyPage</Link></li>
+                                    <li><Link to="/user/login">Login</Link></li>
 
                                 </ul>
                                 <a className='menu-trigger' onClick={menuClick}>
