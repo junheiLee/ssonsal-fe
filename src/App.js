@@ -7,8 +7,8 @@ import Header from './components/fix/Header';
 import Loading from './components/fix/Loading';
 
 import Main from './pages/Main';
-// import GameDetail from './pages/game/GameDetail';
 
+const Rank = lazy(() => import('./pages/rank/Rank'));
 const TeamList = lazy(() => import('./pages/team/TeamList'));
 const TeamDetail = lazy(() => import('./pages/team/TeamDetail'));
 const TeamManager = lazy(() => import('./pages/team/TeamManager'));
@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/teams" element={<TeamList />} />
             <Route path='/teams/:id' element={<TeamDetail />} />
             <Route path='/teams/:id/managers' element={<TeamManager />} />
-            {/* <Route path="/game/GameDetail" element={<GameDetail/>} /> */}
+            <Route path='/ranks' element={<Rank />} />
           </Route>
 
           <Route path='*' element={<Error />} />
