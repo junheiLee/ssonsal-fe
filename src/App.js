@@ -53,11 +53,13 @@ const App = () => {
 const MainLayout = () => {
   return (
     <>
+    <div className='wrapper'>
       <Header />
-      <div className="main-content">
-      </div>
+      <div className="main-content contentWrapper">
       <Outlet />
+      </div>
       <Footer />
+      </div>
     </>
   );
 };
