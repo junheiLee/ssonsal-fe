@@ -42,7 +42,7 @@
     float:left;
 }
 .listsheader span{
-    width:22%;
+    width:20%;
     display: block;
     float:left;
     text-align: center;
@@ -146,13 +146,11 @@ color:#fff;
     float:left;
 }
 .lists a span{
-    width:22%;
+    width:20%;
     display: block;
     float:left;
 }
-.dlatltntwk{
-    text-align: center;
-}
+
 
 .teaminfo{
     border:1px solid black;
@@ -170,3 +168,14 @@ span{
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 992px) {
+      
+      .mediumTeamName {
+     font-size: 12px;
+      }
+      
+      .longTeamName {
+        font-size: 10px;
+      }
+  }

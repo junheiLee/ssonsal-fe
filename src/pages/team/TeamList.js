@@ -26,7 +26,7 @@ const List = () => {
       setUserLevel(response.data.data.userLevel);
     } catch (error) {
       console.log(error);
-      navigate('/*', { replace: true });
+      // navigate('/*', { replace: true });
     } finally {
       setLoading(false);
     }
@@ -93,11 +93,11 @@ const List = () => {
           <div className="listsheader">
             <p><img src={process.env.PUBLIC_URL + '/assets/ball.png'} alt='축구공' /></p>
             <p>
-              <span>팀명</span>
+              <span style={{width:'30%'}}>팀명</span>
               <span>팀 연령대</span>
               <span>실력점수</span>
               <span>선호지역</span>
-              <span style={{ width: '12%' }}>랭킹</span>
+              <span style={{ width: '10%' }}>랭킹</span>
             </p>
           </div>
         </Container>
@@ -117,11 +117,13 @@ const List = () => {
                 <p></p>
                 <p style={{ width: '25px' }}></p>
                 <Link to={`/teams/${team.id}`}>
-                  <span>{team.name}</span>
+                  <span style={{width:'30%'}} className={`teamName ${team.name.length < 5 ? 'shortTeamName' : team.name.length < 10 ? 'mediumTeamName' : 'longTeamName'}`}>
+                    {team.name}
+                  </span>
                   <span>{team.ageAverage}</span>
                   <span>{team.skillScore === -1 ? '기록없음' : team.skillScore}</span>
                   <span>{team.preferredArea}</span>
-                  <span style={{ width: '12%' }}>{team.ranking === -1 ? 'X' : team.ranking}</span>
+                  <span style={{ width: '10%' }}>{team.ranking === -1 ? 'X' : team.ranking}</span>
                 </Link>
               </li>
             ))}
