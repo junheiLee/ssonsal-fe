@@ -6,13 +6,15 @@ import '../../styles/team/List.css';
 import '../../styles/team/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
 
 const List = () => {
+
+  let loginUser = useSelector((state) => { return state.loginUser });
 
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [userLevel, setUserLevel] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,22 +25,22 @@ const List = () => {
     try {
       const response = await axios.get('/api/teams');
       setTeams(response.data.data.teams);
-      setUserLevel(response.data.data.userLevel);
     } catch (error) {
       console.log(error);
-      // navigate('/*', { replace: true });
+      navigate('/*', { replace: true });
     } finally {
       setLoading(false);
     }
   }
+  
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(`/api/teams/search?keyword=${keyword}`);
       setTeams(response.data.data.teams);
-      setUserLevel(response.data.data.userLevel);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.log(error);
+      navigate('/*', { replace: true });
     }
   };
 
@@ -47,9 +49,9 @@ const List = () => {
     try {
       const response = await axios.get('/api/teams/recruit');
       setTeams(response.data.data.teams);
-      setUserLevel(response.data.data.userLevel);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.log(error);
+      navigate('/*', { replace: true });
     }
   };
 
@@ -84,16 +86,23 @@ const List = () => {
         <Container className="mt-2">
           <p className="gobtn" onClick={getTeam}>모든 팀 보기</p>
           <p className="gobtn" onClick={recruitTeam}>팀원 모집 중</p>
-          {userLevel === '신청자' && <span className="applyexists">가입 신청중</span>}
-          {userLevel === '유저' && <Link to="/teams/form" className="createTeam">팀 생성하기</Link>}
-          {userLevel === '게스트' && <Link to="/login" className="createTeam">팀 생성하기</Link>}
+          {loginUser.userInfo.id !== 0 && loginUser.userInfo.teamId === 0 && (
+            <Link to="/teams/form" className="createTeam">
+              팀 생성하기
+            </Link>
+          )}
+          {loginUser.userInfo.id === 0 && (
+            <Link to="/login" className="createTeam">
+              팀 생성하기
+            </Link>
+          )}
         </Container>
 
         <Container className=" mt-5">
           <div className="listsheader">
             <p><img src={process.env.PUBLIC_URL + '/assets/ball.png'} alt='축구공' /></p>
             <p>
-              <span style={{width:'30%'}}>팀명</span>
+              <span style={{ width: '30%' }}>팀명</span>
               <span>팀 연령대</span>
               <span>실력점수</span>
               <span>선호지역</span>
@@ -117,7 +126,7 @@ const List = () => {
                 <p></p>
                 <p style={{ width: '25px' }}></p>
                 <Link to={`/teams/${team.id}`}>
-                  <span style={{width:'30%'}} className={`teamName ${team.name.length < 5 ? 'shortTeamName' : team.name.length < 10 ? 'mediumTeamName' : 'longTeamName'}`}>
+                  <span style={{ width: '30%' }} className={`teamName ${team.name.length < 5 ? 'shortTeamName' : team.name.length < 10 ? 'mediumTeamName' : 'longTeamName'}`}>
                     {team.name}
                   </span>
                   <span>{team.ageAverage}</span>

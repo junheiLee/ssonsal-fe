@@ -5,10 +5,13 @@ import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Detail.css';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 const Detail = () => {
+
+  let loginUser = useSelector((state) =>{return state.loginUser});
 
   const navigate = useNavigate();
   let { id } = useParams();
@@ -29,7 +32,7 @@ const Detail = () => {
       setMembers(response.data.data.members);
     } catch (error) {
       console.log(error);
-      navigate('/*', { replace: true });
+      // navigate('/*', { replace: true });
     } finally {
       setLoading(false);
     }
