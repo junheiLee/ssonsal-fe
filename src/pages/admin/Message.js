@@ -28,8 +28,7 @@ const MessageSubscriptionButton = () => {
       setError(null);
 
       const response = await axios.post('/admin/subscribeMessage', {
-        // 필요한 데이터 전달
-        topicArn: 'your_topic_arn', // 실제 Topic ARN으로 교체
+
       });
 
       setSuccess(true);

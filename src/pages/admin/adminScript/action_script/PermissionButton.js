@@ -28,12 +28,19 @@ const PermissionButton = ({ users, selectedUserIds, setSelectedUserIds }) => {
 
     try {
       const response = await axios.post('/api/management/user/changeRole', requestData);
-
-      if (response.status === 200) {
-        alert('권한 부여 성공!!');
-        setSelectedUserIds([]);
-      } else {
+    
+      if (response.data.error) {
+        console.error('서버 응답 오류:', response.data.error);
         alert('서버 응답 오류');
+      } else {
+        const recognizeAdmin = response.data.data.recognizeAdmin;
+    
+        if (recognizeAdmin) {
+          alert('권한 부여 성공!!');
+          setSelectedUserIds([]);
+        } else {
+          alert('관리자 권한 부여 실패');
+        }
       }
     } catch (error) {
       console.error('에러 발생:', error);
@@ -45,11 +52,10 @@ const PermissionButton = ({ users, selectedUserIds, setSelectedUserIds }) => {
     <div>
       {users && users.map((user) => (
         <div key={user.id}>
-          {/* 추가 필요한 사용자 정보는 여기에 렌더링 */}
         </div>
       ))}
       <button
-        onClick={() => setLocalSelectedUserIds(selectedUserIds)} // 이 부분이 수정된 부분
+        onClick={() => setLocalSelectedUserIds(selectedUserIds)} 
         style={{
           float: 'right',
           margin: '30px 35px 35px 0',

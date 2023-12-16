@@ -6,7 +6,7 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
     const month = e.target.value;
   
     try {
-      const formattedDate = new Date(2023, month, 1).toISOString(); // month는 1부터 시작하므로 1을 빼줍니다.
+      const formattedDate = new Date(2023, month, 1).toISOString(); 
       console.log("선택한 달:", month);
       console.log("포맷된 날짜:", formattedDate);
   
@@ -18,7 +18,6 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
         const newStatsData = response.data.data.monthStats || {};
   const newMonthlyDailyStats = response.data.data.monthlyDailyStats || {};
   
-        // 달이 변경될 때마다 데이터를 완전히 대체하도록 수정
         setStatsData(newStatsData);
          setMonthlyDailyStats(newMonthlyDailyStats);
 
@@ -35,7 +34,6 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
 
   return (
     <div>
-      {/* 달을 선택할 수 있는 셀렉트 박스 */}
       <label htmlFor="SelectMonth">월 선택:</label>
       <select className="form-control" id="SelectMonth" onChange={updateDate}>
         <option>현재 달</option>

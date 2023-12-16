@@ -41,8 +41,8 @@ const Game = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/adminMain");
-      setGameList(response.data.data);
+      const response = await axios.get("/api/admin/game");
+      setGameList(response.data.data.gameList);
     } catch (error) {
       console.error('데이터를 불러오는 중 에러 발생:', error);
     }

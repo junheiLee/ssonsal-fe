@@ -21,7 +21,7 @@ const Stats = () => {
 
   const fetchData = async (selectedDate) => {
     try {
-      const response = await axios.post('/api/admin/stats/changeMonth', { selectedDate });
+      const response = await axios.post('/api/admin/stats', { selectedDate });
       if (response.status === 200) {
         const { monthStats, monthlyDailyStats } = response.data.data;
   
@@ -51,7 +51,7 @@ const Stats = () => {
     } catch (error) {
       console.error('데이터를 불러오는 중 에러 발생:', error);
     } finally {
-      setLoading(false); // 비동기 요청 완료 이후에 setLoading(false) 호출
+      setLoading(false); 
     }
   };
   
@@ -68,7 +68,6 @@ const Stats = () => {
 
     setSelectedMonth(month);
 
-    // 선택한 달 데이터 가져오기
     await fetchData(formattedDate);
   };
   return (
@@ -103,9 +102,7 @@ const Stats = () => {
 
           <div className="animated fadeIn" style={{ paddingTop: '50px' }}>
             <div className="row" style={{ justifyContent: 'space-evenly' }}>
-              {/* 매치 통계 카드들 */}
               <div className="col-lg-3 col-md-6">
-                {/* 이번 달 매치된 총 경기 */}
                 <div className="card">
                   <div className="card-body">
                     <div className="stat-widget-five">
@@ -113,7 +110,6 @@ const Stats = () => {
                         <div className="text-left dib">
                           <div className="stat-heading">이번 달 매치된 총 경기</div>
                           <div className="stat-text">
-                            {/* statsData의 구조를 확인하고, 해당 값이 존재하는지 확인 */}
                             <span className="count">
   {confirmedGameStatsMonth !== undefined
     ? confirmedGameStatsMonth
@@ -137,7 +133,6 @@ const Stats = () => {
                         <div className="text-left dib">
                           <div className="stat-heading">이번달 취소된 총 매치</div>
                           <div className="stat-text">
-                            {/* statsData의 구조를 확인하고, 해당 값이 존재하는지 확인 */}
                             <span className="count">
   {cancelledGameStatsMonth !== undefined
     ? cancelledGameStatsMonth
@@ -162,7 +157,6 @@ const Stats = () => {
                         <div className="text-left dib">
                           <div className="stat-heading">총 게시글 수</div>
                           <div className="stat-text">
-                            {/* statsData의 구조를 확인하고, 해당 값이 존재하는지 확인 */}
                             <span className="count">
   {totalGameStatsMonth !== undefined
     ? totalGameStatsMonth
@@ -183,7 +177,6 @@ const Stats = () => {
             <div className="card" style={{ marginRight: '50px' }}>
               <div className="card-body">
               <h4 className="mb-7">{selectedMonth !== '' ? `${selectedMonth}월 매치 통계` : '현재 달 매치 통계'}</h4>
-                {/* StatsScript 컴포넌트로 차트 렌더링 */}
              
                 <StatsScript
   confirmedGameStatsData={confirmedGameStatsData}

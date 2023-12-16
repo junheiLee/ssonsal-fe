@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
-  // 각 게임에 대한 선택 여부를 관리하는 상태
+
   const [gameSelection, setGameSelection] = useState([]);
 
   useEffect(() => {
-    // Whenever selectedGameIds change, update the gameSelection state
     setGameSelection(selectedGameIds.reduce((acc, gameId) => {
       acc[gameId] = true;
       return acc;
@@ -37,12 +36,18 @@ const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
 
     try {
       const response = await axios.post('/api/management/game/management', requestData);
-
+    
       console.log('서버 응답:', response);
-
-      if (response && response.status === 200) {
-        alert('삭제 성공');
-        onGamesDeleted(); // Trigger a callback to inform the parent component about the deletion
+    
+      if (response && response.data && response.data.code === 'GAME_POST_DELETED') {
+        const deletePost = response.data.data.deletePost;
+    
+        if (deletePost) {
+          alert('삭제 성공');
+          onGamesDeleted(); 
+        } else {
+          alert('삭제 실패');
+        }
       } else {
         alert('삭제 실패');
       }
@@ -61,7 +66,6 @@ const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
       >
         글 삭제
       </button>
-      {/* 각 게임에 대한 체크박스 렌더링 */}
       {selectedGameIds.length > 0 && (
         <div>
           {selectedGameIds.map((gameId) => (

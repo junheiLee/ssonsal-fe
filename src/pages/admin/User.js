@@ -27,7 +27,7 @@ const User = () => {
      //   history.push('/error'); 
      //  return;
      // }
-      setUserList(response.data.data);
+      setUserList(response.data.data.userList);
     } catch (error) {
       console.error('데이터를 불러오는 중 에러 발생:', error);
     }
@@ -44,7 +44,6 @@ const User = () => {
     });
   };
 
-  // 현재 페이지의 데이터만 가져오기
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const currentPageData = userList.slice(startIndex, endIndex);
@@ -123,7 +122,6 @@ const User = () => {
                         ))}
                       </tbody>
                     </table>
-                    {/* Pagination 부분 수정 */}
                     <div className="pagination-container">
                       <ReactPaginate
                         previousLabel={'이전'}
@@ -137,7 +135,6 @@ const User = () => {
                         activeClassName={'pagination__link--active'}
                       />
                     </div>
-                    {/* PermissionButton 위치 조정 */}
                     <PermissionButton
         users={currentPageData}
         selectedUserIds={selectedUserIds}

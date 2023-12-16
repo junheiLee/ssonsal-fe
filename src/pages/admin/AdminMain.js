@@ -9,7 +9,7 @@ import Memo from '../admin/adminScript/fix_script/Memo';
 import Calendar from '../admin/adminScript/fix_script/Calendar'
 
 const AdminMain = () => {
-  const [statsData, setStatsData] = useState(null); // 상태 최상위 레벨에서 정의
+  const [statsData, setStatsData] = useState(null); 
 
   useEffect(() => {
     console.log("useEffect 실행");
