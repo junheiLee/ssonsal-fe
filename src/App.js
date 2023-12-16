@@ -6,6 +6,7 @@ import Error from './components/fix/Error';
 import Footer from './components/fix/Footer';
 import Loading from './components/fix/Loading';
 
+
 import Main from './pages/Main';
 // import GameDetail from './pages/game/GameDetail';
 
@@ -15,12 +16,17 @@ const TeamManager = lazy(() => import('./pages/team/TeamManager'));
 const TeamForm = lazy(() => import('./pages/team/TeamForm'));
 const TeamEdit = lazy(() => import('./pages/team/TeamEdit'));
 
+const AdminMain = lazy(() => import('./pages/admin/AdminMain'));
+const AdminUser = lazy(() => import('./pages/admin/User'));
+const AdminGame = lazy(() => import('./pages/admin/Game'));
+const AdminStats = lazy(() => import('./pages/admin/Stats'));
+
 
 const App = () => {
   return (
     <div className="App">
 
-<Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route element={<MainLayout />}>
             <Route path='/' element={<Main />} />
@@ -30,6 +36,10 @@ const App = () => {
             {/* <Route path="/game/GameDetail" element={<GameDetail/>} /> */}
           </Route>
 
+          <Route path='/admin' element={<AdminMain  />} />
+          <Route path='/admin/AdminUser' element={<AdminUser />} />
+          <Route path='/admin/AdminGame' element={<AdminGame />} />
+          <Route path='/admin/AdminStats' element={<AdminStats />} />
           <Route path='*' element={<Error />} />
           <Route path='/teams/form' element={<TeamForm />} />
           <Route path='/teams/:id/edit' element={<TeamEdit />} />
