@@ -32,7 +32,7 @@ const Detail = () => {
       setMembers(response.data.data.members);
     } catch (error) {
       console.log(error);
-      // navigate('/*', { replace: true });
+      navigate('/*', { replace: true });
     } finally {
       setLoading(false);
     }
