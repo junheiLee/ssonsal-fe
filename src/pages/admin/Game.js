@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import Header2 from './adminScript/AdminHeader';
+import Header from './adminScript/AdminHeader';
 import LeftPanel from './adminScript/LeftPanel';
 import AdminFooter from './adminScript/AdminFooter';
-import Head2 from './adminScript/Head';
+import { useNavigate } from 'react-router-dom';
 // import 'normalize.css';
 // import 'pixeden-stroke-7-icon/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css';
 import 'flag-icon-css/css/flag-icon.min.css';
@@ -13,38 +12,34 @@ import DeleteGamesButton from './adminScript/action_script/DeleteGamesButton';
 import '../../styles/admin/AdminMain.css';
 
 const Game = () => {
+  const navigate = useNavigate();
   const [gameList, setGameList] = useState([]);
   const [selectedGameIds, setSelectedGameIds] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const gamesPerPage = 10; // 페이지당 게임 수
   const pagesVisited = pageNumber * gamesPerPage;
-  // const navigate = useNavigate();
   useEffect(() => {
     fetchData();
-    // adminCheck();
   }, [pageNumber]);
-
-  // const adminCheck = async () => {
-  //   try {
-  //     // const response = await axios.get("요청경로");
-  //     if(response.ok){
-  //       fetchData();
-  //     }
-  //   } catch (error) {
-  //     console.error('데이터를 불러오는 중 에러 발생:', error);
-  //     // error.status 403{
-  //       // navigate('/*', { replace: true });
-  //     // }
-  //   }
-  // };
-
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/admin/game");
       setGameList(response.data.data.gameList);
     } catch (error) {
-      console.error('데이터를 불러오는 중 에러 발생:', error);
+     
+      if (error.response) {
+        const status = error.response.status;
+        const errorCode = error.response.data.code;
+
+        if (status === 401 && errorCode === 'USER_NOT_AUTHENTICATION') {
+          alert("로그인이 필요합니다");
+          navigate('/login', { replace: true });
+        } else if (status === 403 && errorCode === 'ADMIN_AUTH_FAILED') {
+          alert("관리자 권한이 없습니다");
+          navigate('/login', { replace: true });
+        }
+      }
     }
   };
 
@@ -54,10 +49,6 @@ const Game = () => {
     setPageNumber(selected);
   };
 
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
-  };
 
   const getStatusText = (status) => {
     return status === 0 ? '매치 완료' : '매치 대기중';
@@ -96,10 +87,12 @@ const Game = () => {
             onChange={() => handleRowCheckboxChange(game.id)}
           />
         </td>
-        <td>{formatDate(game.createdAt)}</td>
+        <td>{new Date(game.createdAt).toLocaleDateString()}</td>
         <td>{game.writer}</td>
         <td>{game.stadium}</td>
-        <td>{game.schedule}</td>
+        <td>{new Intl.DateTimeFormat('ko-KR', 
+        { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' })
+        .format(new Date(game.schedule))}</td>
         <td>{game.vsFormat} 명</td>
         <td>{getStatusText(game.matchStatus)}</td>
       </tr>
@@ -107,32 +100,23 @@ const Game = () => {
 
   return (
     <>
-      <Head2 />
-      <Header2 />
+      <Header />
       <LeftPanel />
       <div id="right-panel" className="right-panel">
+ 
         <div className="breadcrumbs">
-          <div className="breadcrumbs-inner">
+          
             <div className="row m-0">
-              <div className="col-sm-4">
-                <div className="page-header float-left">
-                  <div className="page-title">
-                    <h1>SSonsal</h1>
-                  </div>
-                </div>
-              </div>
               <div className="col-sm-8">
-                <div className="page-header float-right">
-                  <div className="page-title">
+                <div className="page-header float-right">       
                     <ol className="breadcrumb text-right">
                       <li>SSonsal</li>
                       <li className="active">게임 관리</li>
-                    </ol>
-                  </div>
+                    </ol>                
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
         <div>
           <div className="content">

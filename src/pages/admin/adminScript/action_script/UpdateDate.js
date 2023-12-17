@@ -18,7 +18,7 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
         const newStatsData = response.data.data.monthStats || {};
   const newMonthlyDailyStats = response.data.data.monthlyDailyStats || {};
   
-        setStatsData(newStatsData);
+          setStatsData(newStatsData);
          setMonthlyDailyStats(newMonthlyDailyStats);
 
          console.log("변경된 값 StatsData:", newStatsData);

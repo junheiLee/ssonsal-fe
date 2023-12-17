@@ -8,7 +8,7 @@ const LeftPanel = () => {
         <div id="main-menu" className="main-menu collapse navbar-collapse">
           <ul className="nav navbar-nav">
             <li className="active">
-              <a href="/admin"><i className="menu-icon fa fa-laptop"></i>SSonsal</a>
+              <a href="/admin"><i className="menu-icon fa fa-laptop"></i>Admin</a>
             </li>
             <li className="menu-item-has-children dropdown">
             <Link to="/admin/AdminUser">
@@ -22,26 +22,32 @@ const LeftPanel = () => {
             </Link>
          
             </li>
+
             <li className="menu-item-has-children dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+             <Link to = "/admin/Test">
                 <i className="menu-icon fa fa-table"></i>리뷰 관리
-              </a>
+             </Link>
              
             </li>
             <li className="menu-item-has-children dropdown">
               <Link to="/admin/AdminStats">
                  <i className="menu-icon fa fa-table"></i>통계 확인
-            </Link>
-         
+            </Link>         
             </li>
-            <li className="menu-title">Logout </li>
+
+            <li className="active">
+              <a href="/admin"><i className="menu-icon fa fa-laptop"></i>Home</a>
+            </li>
             <li className="menu-item-has-children dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i className="menu-icon fa fa-glass"></i>Logout      
-              </a>
-           
+              <Link to="/">
+                 <i className="menu-icon fa fa-table"></i>메인 페이지 이동
+            </Link>         
+            </li>
+
+            <li className="menu-item-has-children dropdown">
+              <Link to="/">
+                 <i className="menu-icon fa fa-table"></i>로그 아웃
+            </Link>         
             </li>
           </ul>
         </div>

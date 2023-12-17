@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import Header2 from './adminScript/AdminHeader';
+import Header from './adminScript/AdminHeader';
 import LeftPanel from './adminScript/LeftPanel';
 import AdminFooter from './adminScript/AdminFooter';
-import Head2 from './adminScript/Head';
 import PermissionButton from './adminScript/action_script/PermissionButton';
 import EmailPublishButton from './adminScript/action_script/EmailPublishButton';
 import '../../styles/admin/AdminMain.css';
+import { useNavigate } from 'react-router-dom';
 
 const User = () => {
+  const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,17 +23,23 @@ const User = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/admin/user");
-     // if (response.data.error === 'USER_NOT_AUTHENTICATION') {
-     //   console.error('관리자가 아닙니다:', response.data.error);
-     //   history.push('/error'); 
-     //  return;
-     // }
       setUserList(response.data.data.userList);
     } catch (error) {
-      console.error('데이터를 불러오는 중 에러 발생:', error);
+    
+      if (error.response) {
+        const status = error.response.status;
+        const errorCode = error.response.data.code;
+
+        if (status === 401 && errorCode === 'USER_NOT_AUTHENTICATION') {
+          alert("로그인이 필요합니다");
+          navigate('/login', { replace: true });
+        } else if (status === 403 && errorCode === 'ADMIN_AUTH_FAILED') {
+          alert("관리자 권한이 없습니다");
+          navigate('/login', { replace: true });
+        }
+      }
     }
   };
-
 
   const handleCheckboxChange = (userId) => {
     setSelectedUserIds((prevSelectedUserIds) => {
@@ -51,36 +58,25 @@ const User = () => {
 
   return (
     <>
-      <Head2 />
-      <Header2 />
+      <Header />
       <LeftPanel />
       <div id="right-panel" className="right-panel">
-      <div className="breadcrumbs">
-          <div className="breadcrumbs-inner">
+        <div className="breadcrumbs">         
             <div className="row m-0">
-              <div className="col-sm-4">
-                <div className="page-header float-left">
-                  <div className="page-title">
-                    <h1>SSonsal</h1>
-                  </div>
-                </div>
-              </div>
               <div className="col-sm-8">
-                <div className="page-header float-right">
-                  <div className="page-title">
+                <div className="page-header float-right">       
                     <ol className="breadcrumb text-right">
                       <li>SSonsal</li>
-                      <li className="active">게임 관리</li>
-                    </ol>
-                  </div>
+                      <li className="active">유저 관리</li>
+                    </ol>                
                 </div>
               </div>
-            </div>
-          </div>
+            </div>         
         </div>
         <div>
+        <div className="content">
           <div className="animated fadeIn">
-            <div className="row">
+            
               <div className="col-md-12">
                 <div className="card">
                   <div className="card-header">
@@ -144,7 +140,7 @@ const User = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
         </div>
         <AdminFooter />
       </div>

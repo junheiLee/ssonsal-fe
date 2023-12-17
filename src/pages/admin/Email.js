@@ -9,18 +9,6 @@ const EmailSubscriptionButton = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
-  useEffect(() => {
-    const checkSubscription = async () => {
-      try {
-        const response = await axios.get('/api/admin/check-subscription');
-        setIsSubscribed(response.data.isSubscribed);
-      } catch (error) {
-        console.error('구독 여부 확인 에러', error);
-      }
-    };
-
-    checkSubscription();
-  }, []);
 
   const handleSubscribe = async () => {
     try {
@@ -30,7 +18,7 @@ const EmailSubscriptionButton = () => {
       // 이메일 인증 확인중으로 상태 업데이트
       setConfirming(true);
 
-      const response = await axios.post('/admin/memberSubscribe');
+      const response = await axios.post('/api/memberSubscribe');
 
       setSuccess(true);
       console.log('이메일 구독 성공', response.data);
@@ -47,7 +35,7 @@ const EmailSubscriptionButton = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post('/admin/confirm-subscription');
+      const response = await axios.post('/api/confirm-subscription');
 
       if (response.data.data === '이메일 불일치') {
         console.log('이메일 불일치');

@@ -1,17 +1,17 @@
 import React from 'react';
-import StyleSheet from './StyleSheet';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header id="header" className="header">
-      <StyleSheet />
-      <div className="top-left">
-        <div className="navbar-header">
-          <a className="navbar-brand" href="/admin.html"><img src="/images/logo.svg" alt="Logo" /></a>
-          <a className="navbar-brand hidden" href="/admin.html"><img src="/images/logo2.svg" alt="Logo" /></a>
-          <a id="menuToggle" className="menutoggle"><i className="fa fa-bars"></i></a>
-        </div>
-      </div>
+    <header style={{ position: 'relative', left: '280px', width: 'calc(100% - 280px)' }}>
+      <Link to="/admin">
+        <img
+          className='img-fluid' 
+          src={process.env.PUBLIC_URL + '/assets/header.jpg'}
+          alt="Camp Nou"
+          style={{ width: '100%', height: 'auto', maxHeight: '170px' }}
+        />
+      </Link>
     </header>
   );
 };

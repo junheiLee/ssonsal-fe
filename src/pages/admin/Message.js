@@ -9,25 +9,12 @@ const MessageSubscriptionButton = () => {
   const [success, setSuccess] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  useEffect(() => {
-    const checkSubscription = async () => {
-      try {
-        const response = await axios.get('/api/admin/check-message-subscription');
-        setIsSubscribed(response.data.isSubscribed);
-      } catch (error) {
-        console.error('메시지 구독 여부 확인 에러', error);
-      }
-    };
-
-    checkSubscription();
-  }, []);
-
   const handleSubscribe = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post('/admin/subscribeMessage', {
+      const response = await axios.post('/api/subscribeMessage', {
 
       });
 
@@ -42,7 +29,7 @@ const MessageSubscriptionButton = () => {
   };
 
   return (
-    <div className="message-subscription-container">
+    <div className="email-subscription-container">
       {isSubscribed ? (
         <button className="btn btn-success" disabled>
           알림 받기 성공
@@ -50,14 +37,14 @@ const MessageSubscriptionButton = () => {
       ) : (
         <div className="subscription-info">
           <div className="additional-info">
-            <p>메시지로 제공하는 이벤트 소식을 받을 수 있습니다.</p>
+            <p>SSonsal 경기 매치 성공시 메시지 알람을 받을 수 있습니다</p>
           </div>
           <button
-            className={`btn btn-primary ${loading || success ? 'disabled' : ''}`}
+            className={`subscribe-button ${loading || success ? 'disabled' : ''}`}
             onClick={handleSubscribe}
             disabled={loading || success}
           >
-            {loading ? '처리 중...' : success ? '알림 받기 성공' : '알림 받기'}
+            {loading ? '처리 중...' : success ? '알림 받기 성공' : '메시지 알림 받기'}
           </button>
         </div>
       )}

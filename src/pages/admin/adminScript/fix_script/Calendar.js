@@ -22,26 +22,25 @@ const Calendar = () => {
   };
 
   return (
-    <Container>
-      <div className="container mt-5">
-        <Col md="6">
-          <h2>달력</h2>
-          <Form.Group controlId="formDate">
-            
-            <Form.Control
-              type="date"
-              value={selectedDate.toISOString().split('T')[0]}
-              onChange={(e) => {
-                handleDateChange(e.target.value);
-                // 여기서 한국 시간으로 설정
-                const seoulTimezoneDate = new Date(selectedDate.getTime() + (9 * 60 * 60 * 1000));
-                setSelectedDate(seoulTimezoneDate);
-              }}
-            />
-          </Form.Group>
-        </Col>
-      </div>
-    </Container>
+    <Container className="mt-5">
+  <Col md="6">
+    <div style={{ marginBottom: '30px' }}>
+      <h2>달력</h2>
+    </div>
+    <Form.Group controlId="formDate">
+      <Form.Control
+        type="date"
+        value={selectedDate.toISOString().split('T')[0]}
+        onChange={(e) => {
+          handleDateChange(e.target.value);
+          // 여기서 한국 시간으로 설정
+          const seoulTimezoneDate = new Date(selectedDate.getTime() + (9 * 60 * 60 * 1000));
+          setSelectedDate(seoulTimezoneDate);
+        }}
+      />
+    </Form.Group>
+  </Col>
+</Container>
   );
 };
 
