@@ -1,103 +1,78 @@
+import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import '../../styles/team/index.css';
+import '../../styles/review/reviewform.css'
 import axios from 'axios';
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ReviewForm.css';
+import {
+  ModalContainer,
+  ModalBackdrop,
+  ModalBtn,
+  ExitBtn,
+  ModalView,
+} from '../../styles/review/reviewform';
 
-const ReviewForm = () => {
+const ReviewForm = (targetId, gameId, reviewCode) => {
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
-
-  const [reviewCode, setReviewCode] = useState('');
-  const [writerId, setWriterId] = useState('');
-  const [targetId, setTargetId] = useState('');
-  const [gameId, setGameId] = useState('');
-  const [skillScore, setSkillScore] = useState('5');
-  const [mannerScore, setMannerScore] = useState('5');
-  const [comment, setComment] = useState('');
-
-  // 점수 제한
-  const handleSkillScoreChange = (e) => {
-    const value = Math.min(Math.max(parseInt(e.target.value) || 0, 0), 100);
-    setSkillScore(value.toString());
+  const closeModalHandler = () => {
+    setIsOpen(false);
   };
 
-  const handleMannerScoreChange = (e) => {
-    const value = Math.min(Math.max(parseInt(e.target.value) || 0, 0), 100);
-    setMannerScore(value.toString());
-  };
+  const confirmReview = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const comment = event.target.elements.comment.value;
+    const skillScore = event.target.elements.skillScore.value;
+    const mannerScore = event.target.elements.mannerScore.value;
 
-    const reviewData = {
-      reviewCode,
-      writerId,
-      targetId,
-      gameId,
-      skillScore,
-      mannerScore,
-      comment,
-    };
+    const isConfirmed = window.confirm("리뷰를 작성하시겠습니까?");
 
-    try {
-      const response = await axios.post('/reviews/', reviewData);
-
-      console.log('응답 데이터:', response.data);
-      console.log('리뷰가 성공적으로 제출되었습니다.');
-
-      // 페이지 이동 시
-      navigate('/');
-    } catch (error) {
-      console.error('에러 발생:', error);
+    if (isConfirmed) {
+      try {
+        const response = await axios.post('/api/reviews', {
+          targetId : targetId,
+          gameId: gameId,
+          reviewCode : reviewCode,
+          comment: comment,
+          skillScore: skillScore,
+          mannerScore: mannerScore,
+        });
+        alert("작성 성공!");
+        console.log(response);
+        navigate('/', { replace: true });
+      } catch (error) {
+        console.log(error);
+        navigate('/*', { replace: true });
+      }
     }
-  };
+  }
 
   return (
-
-    <div className="review-form-container">
-
-      <form className="review-form" onSubmit={handleSubmit}>
-        <div className="form-heading">
-          리뷰 작성
-        </div>
-        <div className="horizontal-inputs">
-
-          <div>
-            <label>
-              리뷰 코드:
-              <input type="text" value={reviewCode} onChange={(e) => setReviewCode(e.target.value)} />
-            </label>
-            <label>
-              작성자 ID:
-              <input type="text" value={writerId} onChange={(e) => setWriterId(e.target.value)} />
-            </label>
-            <label>
-              대상 ID:
-              <input type="text" value={targetId} onChange={(e) => setTargetId(e.target.value)} />
-            </label>
-          </div>
-          <div>
-            <label>
-              게임 ID:
-              <input type="text" value={gameId} onChange={(e) => setGameId(e.target.value)} />
-            </label>
-            <label>
-              기술 점수:
-              <input type="number" value={skillScore} onChange={handleSkillScoreChange} min="0" max="5" />
-            </label>
-            <label>
-              태도 점수:
-              <input type="number" value={mannerScore} onChange={handleMannerScoreChange} min="0" max="5" />
-            </label>
-          </div>
-        </div>
-        <label>
-          코멘트:
-          <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
-        </label>
-        <button type="submit">제출</button>
-      </form>
-    </div>
+    <>
+      <ModalContainer>
+      {isOpen ? (
+          <ModalBackdrop onClick={closeModalHandler}>
+            <ModalView onClick={(e) => e.stopPropagation()}>
+              <ExitBtn onClick={closeModalHandler}>X</ExitBtn>
+              <div className='desc'>
+                <Form id='reviewForm' onSubmit={(event) => confirmReview(event)}>
+                  <h4>한줄평</h4>
+                  <input type='text' name='comment' maxLength={20} />
+                  <label>스킬 점수</label>
+                  <input type="number" name='skillScore' min="1" max="100" required />
+                  <label>매너 점수</label>
+                  <input type="number" name='mannerScore' min="1" max="100" required />
+                  <input type="submit" value='작성완료' />
+                </Form>
+              </div>
+            </ModalView>
+          </ModalBackdrop>
+          ) : null}
+      </ModalContainer>
+    </>
   );
 };
+
 
 export default ReviewForm;
