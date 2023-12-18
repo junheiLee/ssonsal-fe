@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { doLogOut, getCookie } from '../../services/UserService.js';
-import { logOut } from "../../store/loginUser.js";
+import { logOut } from "../../store/LoginUser.js";
 
 import './Header.css';
 import './index.css';

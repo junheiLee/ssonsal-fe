@@ -7,6 +7,7 @@ import '../../styles/team/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
+import { getCookie } from '../../services/UserService';
 
 const GameList = () => {
 
@@ -32,7 +33,7 @@ const GameList = () => {
       setLoading(false);
     }
   }
-  
+
 
   const handleSearch = async () => {
     try {
@@ -86,13 +87,8 @@ const GameList = () => {
         <Container className="mt-2">
           <p className="gobtn" onClick={getTeam}>모든 팀 보기</p>
           <p className="gobtn" onClick={recruitTeam}>팀원 모집 중</p>
-          {loginUser.userInfo.id !== 0 && loginUser.userInfo.teamId === 0 && (
+          {loginUser.id != 0 && loginUser.teamId == 0 && (
             <Link to="/teams/form" className="createTeam">
-              팀 생성하기
-            </Link>
-          )}
-          {loginUser.userInfo.id === 0 && (
-            <Link to="/login" className="createTeam">
               팀 생성하기
             </Link>
           )}
@@ -118,7 +114,7 @@ const GameList = () => {
         )}
 
 
-        <Container className="mt-5">
+        <Container className="mt-5 mb-5">
 
           <ul className="teamlist">
             {teams.map((team) => (

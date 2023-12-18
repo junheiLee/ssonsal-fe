@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import '../../styles/user/login.css';
-import { logIn } from "../../store/loginUser.js";
+import { logIn } from "../../store/LoginUser.js";
 import { useDispatch } from 'react-redux';
 
 

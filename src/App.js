@@ -24,6 +24,12 @@ const SignIn = lazy(()=> import( './pages/user/signin'));
 const SignUp = lazy(()=>import('./pages/user/signup'));
 const MyProfile = lazy(()=>import('./pages/user/myprofile'));
 
+const AdminMain = lazy(() => import('./pages/admin/AdminMain'));
+const AdminUser = lazy(() => import('./pages/admin/User'));
+const AdminGame = lazy(() => import('./pages/admin/Game'));
+const AdminStats = lazy(() => import('./pages/admin/Stats'));
+const Test = lazy(() => import('./pages/admin/Test'));
+
 
 const App = () => {
 
@@ -49,9 +55,13 @@ const App = () => {
             <Route path="/user/sign-in" element={<SignIn />} />
             <Route path="/user/sign-up" element={<SignUp />} />
             <Route path="/user/profile" element={<MyProfile />} />
-
           </Route>
 
+          <Route path='/admin' element={<AdminMain  />} />
+          <Route path='/admin/AdminUser' element={<AdminUser />} />
+          <Route path='/admin/AdminGame' element={<AdminGame />} />
+          <Route path='/admin/AdminStats' element={<AdminStats />} />
+          <Route path='/admin/Test' element={<Test />} />
           <Route path='*' element={<Error />} />
           <Route path='/teams/form' element={<TeamForm />} />
           <Route path='/teams/:id/edit' element={<TeamEdit />} />
