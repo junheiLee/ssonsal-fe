@@ -1,3 +1,4 @@
+
 import React from 'react';
 import '../../styles/game/GameDetail.css'; // React 파일 위치에 따라 상대 경로 조절
 import { SubService } from '../../service/SubService';

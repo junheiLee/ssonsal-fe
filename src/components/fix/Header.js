@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import './Header.css';
 import './index.css';
 
 
 const Header = () => {
+
+    let [login, setLogin] = useState(true);
+    let [hasTeam, setHasTeam] = useState(false);
 
     const menuClick = () => {
         const nav = document.querySelector('.header-area .nav');
@@ -27,7 +31,7 @@ const Header = () => {
                                 
                                 {/* menu start */}
                                 <ul className="nav">
-                                    <li><Link to="/for-team">Game</Link></li>
+                                    <li><Link to="/games/option/all">Game</Link></li>
                                     <li><Link to="/ranks">Rank</Link></li>
                                     <li><Link to="/teams">Teams</Link></li>
                                     <li><Link to="/user/mypage">MyPage</Link></li>
