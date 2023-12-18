@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -10,12 +13,16 @@
     "async": "^3.2.5",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
-    "react-redux": "^9.0.2",
+    "react-redux": "^9.0.4",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.8",
+    "redux-persist": "^6.0.0",
+    "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
