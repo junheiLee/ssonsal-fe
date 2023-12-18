@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import '../../styles/review/review.css';
 import '../../styles/team/index.css';
+import { getCookie } from '../../services/UserService';
 
 function TeamReviews() {
   const { teamId } = useParams();
@@ -19,7 +20,12 @@ function TeamReviews() {
 
   const getReviews = async () => {
     try {
-      const response = await axios.get('/api/reviews/team/' + teamId);
+      const response = await axios.get('/api/reviews/team/' + teamId, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       console.log(response);
       setReviews(response.data.data);
     } catch (error) {

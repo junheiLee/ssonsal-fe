@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../../styles/team/index.css';
 import '../../styles/team/Create.css';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
 
 const TeamForm = () => {
 
@@ -56,16 +57,14 @@ const TeamForm = () => {
       const response = await axios.post('/api/teams', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          ssonToken: getCookie("token")
         },
       });
       alert(response.data.data.teamName + '팀 생성 완료!');
       navigate('/teams/' + response.data.data.teamId, { replace: true });
     } catch (error) {
 
-      if (error.response.data.httpStatus === 401) {
-        alert(error.response.data.message);
-        navigate('/user/login', { replace: true });
-      } else if (error.response.status === 400) {
+      if (error.response.status === 400) {
         alert(error.response.data.message);
       } else if (error.response.data.httpStatus === 400 || error.response.data.httpStatus === 409) {
         alert(error.response.data.message);
