@@ -6,13 +6,13 @@ import { persistReducer } from 'redux-persist';
 import loginUser from './LoginUser'
 
 const reducers = combineReducers({
-  userInfo: loginUser.reducer
+  loginUser: loginUser.reducer
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['userInfo']
+  whitelist: ['loginUser']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -1,0 +1,45 @@
+.email-subscription-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e21a1a;
+    border-radius: 5px;
+    width: 40%; /* 부모 요소에 상대적인 가로 크기를 80%로 설정 */
+    height: 60%; /* 부모 요소에 상대적인 세로 크기를 60%로 설정 */
+  }
+  
+  .subscription-info {
+    display: flex;
+    flex-direction: row; /* 가로로 정렬 */
+    align-items: center;
+    justify-content: space-between; /* 오른쪽 끝 정렬 */
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .additional-info {
+    font-size: 20px; /* 텍스트 크기 키우기 */
+  }
+  
+  .subscribe-button,
+  .confirmation-button {
+    margin-top: 20px; /* 버튼 상단 여백 조절 */
+    padding: 12px 15px; /* 버튼 크기 조절 */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 1px solid #101010;
+    border-radius: 5px;
+  }
+  
+  .subscribe-button.disabled,
+  .confirmation-button.disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 2px;
+  } 
