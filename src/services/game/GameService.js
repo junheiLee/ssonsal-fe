@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from '../UserService.js';
 
 export const getGames = async (option) => {
 
@@ -6,7 +7,8 @@ export const getGames = async (option) => {
 
         const response = await axios.get(`/games/${option}`, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
             },
         });
 
@@ -28,8 +30,8 @@ export const getGame = async (gameId) => {
     try {
         const response = await axios.get(`/games/${gameId}`, {
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")            }
         });
 
         if(response.data.code === "SUCCESS") {
@@ -48,8 +50,8 @@ export const createGame = async (createdGame) => {
     try {
         const response = await axios.post(`/games`, JSON.stringify(createdGame), {
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")            }
         })
 
         if(response.data.code === "SUCCESS") {

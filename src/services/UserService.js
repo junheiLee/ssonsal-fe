@@ -25,7 +25,7 @@ export const doLogOut = async (token) => {
     try {
         const response = await axios.post("/user/logout", null, {
             headers: {
-                ssonToken: token
+                ssonToken: getCookie("token")
             }
         });
 
