@@ -5,13 +5,8 @@ import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Detail.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ReviewForm from '../review/ReviewForm';
-
 
 const Detail = () => {
-
-  let loginUser = useSelector((state) => { return state.loginUser });
 
   const navigate = useNavigate();
   let { id } = useParams();
@@ -26,6 +21,7 @@ const Detail = () => {
   }, []);
 
   const getDetail = async () => {
+
     try {
       const response = await axios.get('/api/teams/' + id);
       setUserLevel(response.data.data.userLevel);
@@ -38,6 +34,7 @@ const Detail = () => {
       setLoading(false);
     }
   }
+
 
   const applyTeam = async (teamId) => {
 
@@ -200,11 +197,6 @@ const Detail = () => {
           </span>
         )}
 
-        {userLevel === '게스트' && (
-          <Link to="/user/sign-in" className="joinbtn">
-            팀 신청 하기
-          </Link>
-        )}
       </Container>
 
       <div style={{ clear: 'both' }}></div>
