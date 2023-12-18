@@ -8,7 +8,6 @@ import Loading from './components/fix/Loading';
 
 
 import Main from './pages/Main';
-// import GameDetail from './pages/game/GameDetail';
 
 const TeamList = lazy(() => import('./pages/team/TeamList'));
 const TeamDetail = lazy(() => import('./pages/team/TeamDetail'));
@@ -34,7 +33,6 @@ const App = () => {
             <Route path="/teams" element={<TeamList />} />
             <Route path='/teams/:id' element={<TeamDetail />} />
             <Route path='/teams/:id/managers' element={<TeamManager />} />
-            {/* <Route path="/game/GameDetail" element={<GameDetail/>} /> */}
           </Route>
 
           <Route path='/admin' element={<AdminMain  />} />

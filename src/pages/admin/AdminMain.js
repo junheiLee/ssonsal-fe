@@ -7,6 +7,15 @@ import '../../styles/admin/AdminMain.css';
 import Memo from '../admin/adminScript/fix_script/Memo';
 import Calendar from '../admin/adminScript/fix_script/Calendar'
 import { useNavigate } from 'react-router-dom';
+//import { getCookie, doLogOut } from '../UserService.js';
+// //import { logOut } from "../../store/loginUser.js";
+// const handleLogout = async () => {
+//   doLogOut(token);
+//   dispatch(logOut());
+//   navigate("/user/sign-in");
+
+// };
+
 
 const AdminMain = () => {
   const navigate = useNavigate();
@@ -41,8 +50,9 @@ const AdminMain = () => {
   };
 
   const handleLogout = () => {
-    // 로그아웃 시 로컬 스토리지의 메모 데이터 제거
+    
     localStorage.removeItem('memos');
+ 
     // 로그아웃 로직 추가 (예: 세션 종료)
   };
 
