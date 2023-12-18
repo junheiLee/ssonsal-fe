@@ -6,6 +6,7 @@ import '../../styles/review/reportform.css';
 import '../../styles/team/index.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { getCookie } from '../../services/UserService';
 
 const ReportForm = () => {
 
@@ -23,6 +24,11 @@ const ReportForm = () => {
                 const response = await axios.post('/api/reports', {
                     reviewId: reviewId,
                     reason: document.getElementById('reason').value,
+                },{
+                    headers: {
+                        "Content-Type": "application/json",
+                        ssonToken: getCookie("token")
+                      },
                 });
                 alert("신고 성공!");
                 console.log(response);

@@ -4,6 +4,7 @@ import '../../styles/team/index.css';
 import '../../styles/review/reviewform.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
 import {
   ModalContainer,
   ModalBackdrop,
@@ -31,12 +32,17 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
     if (isConfirmed) {
       try {
         const response = await axios.post('/api/reviews', {
-          targetId : targetId,
+          targetId: targetId,
           gameId: gameId,
-          reviewCode : reviewCode,
+          reviewCode: reviewCode,
           comment: comment,
           skillScore: skillScore,
           mannerScore: mannerScore,
+        },{
+          headers: {
+            "Content-Type": "application/json",
+            ssonToken: getCookie("token")
+          },
         });
         alert("작성 성공!");
         console.log(response);
@@ -51,7 +57,7 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
   return (
     <>
       <ModalContainer>
-      {isOpen ? (
+        {isOpen ? (
           <ModalBackdrop onClick={closeModalHandler}>
             <ModalView onClick={(e) => e.stopPropagation()}>
               <ExitBtn onClick={closeModalHandler}>X</ExitBtn>
@@ -68,7 +74,7 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
               </div>
             </ModalView>
           </ModalBackdrop>
-          ) : null}
+        ) : null}
       </ModalContainer>
     </>
   );
