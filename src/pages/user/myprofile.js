@@ -100,11 +100,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { doLogOut, getCookie } from '../../services/UserService.js';
+import { logOut } from "../../store/loginUser.js";
+
+
 
 const UserComponent = () => {
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState(getCookie("token"));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -124,40 +131,13 @@ const UserComponent = () => {
     fetchUserData();
   }, [token]);
 
-  function getCookie(key) {
-    var result = null;
-    var cookie = document.cookie.split(";");
-    cookie.some(function (item) {
-      item = item.replace(" ", "");
-
-      var dic = item.split("=");
-
-      if (key === dic[0]) {
-        result = dic[1];
-        return true;
-      }
-    });
-
-    return result;
-  }
-
   const handleLogout = async () => {
-    try {
-      // 로그아웃 요청
-      const logoutResponse = await axios.post("/user/logout", null, {
-        headers: {
-          ssonToken: token,
-        },
-      });
 
-      // 쿠키 삭제
-      document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    doLogOut(token);
+    dispatch(logOut());
 
-      // 홈 페이지로 리다이렉트
-      navigate("/user/sign-in");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
+    navigate("/user/sign-in");
+
   };
 
   const handleTeamRequest = async () => {

@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import '../../styles/user/login.css';
-import { login } from "../../store/loginUser.js";
+import { logIn } from "../../store/loginUser.js";
 import { useDispatch } from 'react-redux';
 
 
@@ -34,6 +34,7 @@ const LoginForm = () => {
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
+
   const navigateToSignUp = () => {
     navigate('/user/sign-up');
   };
@@ -42,7 +43,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post('/user/sign-in', formData);
 
-      dispatch(login(response.data.data));
+      dispatch(logIn(response.data.data));
       navigate('/user/profile');
 
     } catch (error) {
@@ -54,7 +55,7 @@ const LoginForm = () => {
     <div className="app">
       <div className="login-form">
         <div className="form-header">
-        <div className="logo-wrapper">
+          <div className="logo-wrapper">
             <div className="logo">
               <img
                 src="https://images.unsplash.com/photo-1562790301-f9244aa7d429?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -81,7 +82,7 @@ const LoginForm = () => {
             Login
           </button>
           <button className="form-submit" onClick={navigateToSignUp}>
-          Sign Up
+            Sign Up
           </button>
         </form>
         <a href="#" className="forgot-link">

@@ -7,7 +7,7 @@ const loginUser = createSlice({
     teamId: 0
   },
   reducers: {
-    login(loginUser, data) {
+    logIn(loginUser, data) {
       loginUser.id = data.payload.id;
       loginUser.teamId = data.payload.teamId;
     },
@@ -18,7 +18,7 @@ const loginUser = createSlice({
   }
 });
 
-export const { login, logOut } = loginUser.actions;
+export const { logIn, logOut } = loginUser.actions;
 
 
 export default loginUser;
