@@ -267,3 +267,12 @@ body {
 .margin-bottom-100 {
   margin-bottom: 100px !important;
 }
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapper{
+  flex: 1;
+}

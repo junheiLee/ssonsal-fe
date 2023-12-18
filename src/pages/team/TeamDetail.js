@@ -5,10 +5,13 @@ import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Detail.css';
 import { useParams } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import ReviewForm from '../review/ReviewForm';
 
 
 const Detail = () => {
+
+  let loginUser = useSelector((state) => { return state.loginUser });
 
   const navigate = useNavigate();
   let { id } = useParams();
@@ -16,6 +19,7 @@ const Detail = () => {
   const [userLevel, setUserLevel] = useState('');
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     getDetail();
@@ -121,7 +125,7 @@ const Detail = () => {
                 <Link to="#">출전 경기 보기</Link>
               </Col>
               <Col lg={12} className="col-4 col-lg-12">
-                <Link to="#">팀 리뷰 보기</Link>
+                <Link to={`/reviews/team/${id}`}>팀 리뷰 보기</Link>
               </Col>
             </Row>
           </Col>
@@ -231,7 +235,6 @@ const Detail = () => {
           </Row>
         </Row>
       </Container>
-
 
     </>
   );

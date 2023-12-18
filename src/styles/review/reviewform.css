@@ -1,0 +1,22 @@
+
+#reviewForm input[type="text"]{
+width:100%;
+}
+
+#reviewForm h4{
+    margin-bottom: 5px;
+}
+#reviewForm label{
+    margin-top: 5px;
+    width:100%;
+}
+#reviewForm input[type="submit"]{
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: none;
+    background-color: #2A8757;
+    color:#fff;
+    padding:10px;
+    border-radius: 100px;
+}

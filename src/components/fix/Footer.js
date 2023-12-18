@@ -39,7 +39,8 @@ const Footer = () => {
                   <Col lg={6} xs={6}><li><Link to="#">Game</Link></li></Col>
                   <Col lg={6} xs={6}><li><Link to="#">Rank</Link></li></Col>
                   <Col lg={6} xs={6}><li><Link to="/teams">Teams</Link></li></Col>
-                  <Col lg={6} xs={6}><li><Link to="#">Admin</Link></li></Col>
+                  <Col lg={6} xs={6}><li><Link to="/admin">Admin</Link></li></Col>
+
                   </Row>
                 </ul>
               </div>
