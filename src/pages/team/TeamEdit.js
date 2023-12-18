@@ -75,7 +75,7 @@ const TeamEdit = () => {
         formData.set('recruit', form.recruit);
 
         try {
-            const response = await axios.patch('/api/teams', formData);
+            const response = await axios.patch('/api/teams/'+id, formData);
             alert('팀 정보 수정 성공!')
             console.log(response);
             navigate('/teams/' + response.data.data.teamId, { replace: true });
@@ -94,6 +94,7 @@ const TeamEdit = () => {
             }
             else {
                 alert('알 수 없는 오류가 발생했습니다.');
+                console.log(error);
                 navigate('/', { replace: true });
             }
         }
@@ -107,7 +108,6 @@ const TeamEdit = () => {
             <Container className="text-center mt-5">
                 <Form onSubmit={editTeam} encType="multipart/form-data">
                     <Form.Group controlId="formId">
-                        <Form.Control type="hidden" name="id" value={id} />
                     </Form.Group>
                     <Row className="mb-4">
                         <Col lg={4} mb={5}>

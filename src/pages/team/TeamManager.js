@@ -24,13 +24,13 @@ const Manager = () => {
 
   const getManage = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/api/teams/' + id + "/managers");
+      const response = await axios.get('/api/teams/' + id + "/managers");
       setLeader(response.data.data.teamLeader);
       setApplies(response.data.data.applies);
       setRejects(response.data.data.rejects);
       setMembers(response.data.data.members);
     } catch (error) {
-      navigate('/*', { replace: true });
+      // navigate('/*', { replace: true });
     } finally {
       setLoading(false);
       
@@ -161,7 +161,7 @@ const Manager = () => {
             <Col lg={6} key={member.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${member.id}`}>
+                <Link to={`/user/${member.id}`}>
                   <span style={{ width: '40%' }}>{member.nickname}</span>
                   <span>{member.age}</span>
                   <span>{member.gender}</span>
@@ -209,7 +209,7 @@ const Manager = () => {
             <Col lg={6} key={apply.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${apply.id}`}>
+                <Link to={`/user/${apply.id}`}>
                   <span style={{ width: '40%' }}>{apply.nickname}</span>
                   <span>{apply.age}</span>
                   <span>{apply.gender}</span>
@@ -254,7 +254,7 @@ const Manager = () => {
             <Col lg={6} key={reject.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${reject.id}`}>
+                <Link to={`/user/${reject.id}`}>
                   <span style={{ width: '40%' }}>{reject.nickname}</span>
                   <span>{reject.age}</span>
                   <span>{reject.gender}</span>

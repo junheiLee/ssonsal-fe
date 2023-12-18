@@ -88,7 +88,7 @@ const Detail = () => {
 
     if (error.response.data.httpStatus === 401) {
       alert(error.response.data.message);
-      navigate('/user/login', { replace: true });
+      navigate('/user/sign-in', { replace: true });
     } else if (error.response.data.httpStatus === 403 || error.response.data.httpStatus === 409
       || error.response.data.httpStatus === 404 || error.response.data.httpStatus === 400) {
       alert(error.response.data.message);
@@ -201,7 +201,7 @@ const Detail = () => {
         )}
 
         {userLevel === '게스트' && (
-          <Link to="/login" className="joinbtn">
+          <Link to="/user/sign-in" className="joinbtn">
             팀 신청 하기
           </Link>
         )}
@@ -223,7 +223,7 @@ const Detail = () => {
               <Col lg={6} key={i}>
                 <div className="detailmembers">
                   <p>{i + 1}</p>
-                  <Link to={`/users/${member.id}`}>
+                  <Link to={`/user/${member.id}`}>
                     <span style={{ width: '40%' }}>{member.nickname}</span>
                     <span>{member.age}</span>
                     <span>{member.gender}</span>
