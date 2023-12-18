@@ -93,14 +93,14 @@ body {
         border: none;
         font-size: 1em;
         margin: 0.5em 1em;
-        background: #f1895c;
+        background: #2a8757;
         box-shadow: 5px 5px 10px #d1cdc7, -5px -5px 10px #ffffff;
         &:hover {
-          background: #e37c4f;
+          background: #2a8757;
         }
         &:active {
-          background: #f1895c;
-          box-shadow: inset 7px 7px 38px #e37c4f, inset -7px -7px 38px #ffa076;
+          background: #2a8757;
+          box-shadow: inset 7px 7px 38px #2a8757, inset -7px -7px 38px #ffa076;
         }
       }
       .form-field {

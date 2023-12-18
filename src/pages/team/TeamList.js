@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 
-const List = () => {
+const GameList = () => {
 
   let loginUser = useSelector((state) => { return state.loginUser });
 
@@ -144,4 +144,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default GameList;

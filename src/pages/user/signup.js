@@ -55,7 +55,7 @@ const SignUpForm = () => {
         <input type="date" name="birth" value={formData.birth} onChange={handleChange} required />
       </label>
       <br />
-      <label>Gender:
+      <label>Gender: 여성, 남성
         <input type="text" name="gender" value={formData.gender} onChange={handleChange} required />
       </label>
       <br />
@@ -81,11 +81,6 @@ const SignUpForm = () => {
       <br />
       <label>Preferred Area:
         <input type="text" name="preferredArea" value={formData.preferredArea} onChange={handleChange} required />
-      </label>
-      <br />
-      {/* 역할(role) 입력란 추가 */}
-      <label>Role:
-        <input type="number" name="role" value={formData.role} onChange={handleChange} required />
       </label>
       <br />
       <button type="submit">가입하기</button>

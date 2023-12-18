@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
-import '../css/logintest.css';
+import '../../styles/user/login.css';
+import { logIn } from "../../store/loginUser.js";
+import { useDispatch } from 'react-redux';
+
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formSchema = yup.object({
     email: yup.string().required('이메일을 입력해주세요').email('이메일 형식이 아닙니다.'),
@@ -30,6 +34,7 @@ const LoginForm = () => {
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
+
   const navigateToSignUp = () => {
     navigate('/user/sign-up');
   };
@@ -37,8 +42,10 @@ const LoginForm = () => {
   const onSubmit = async (formData) => {
     try {
       const response = await axios.post('/user/sign-in', formData);
+
+      dispatch(logIn(response.data.data));
       navigate('/user/profile');
-      console.log(response);
+
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +55,7 @@ const LoginForm = () => {
     <div className="app">
       <div className="login-form">
         <div className="form-header">
-        <div className="logo-wrapper">
+          <div className="logo-wrapper">
             <div className="logo">
               <img
                 src="https://images.unsplash.com/photo-1562790301-f9244aa7d429?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -75,7 +82,7 @@ const LoginForm = () => {
             Login
           </button>
           <button className="form-submit" onClick={navigateToSignUp}>
-          Sign Up
+            Sign Up
           </button>
         </form>
         <a href="#" className="forgot-link">
