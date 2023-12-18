@@ -31,9 +31,9 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
     if (isConfirmed) {
       try {
         const response = await axios.post('/api/reviews', {
-          targetId : targetId,
+          targetId: targetId,
           gameId: gameId,
-          reviewCode : reviewCode,
+          reviewCode: reviewCode,
           comment: comment,
           skillScore: skillScore,
           mannerScore: mannerScore,
@@ -51,7 +51,7 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
   return (
     <>
       <ModalContainer>
-      {isOpen ? (
+        {isOpen ? (
           <ModalBackdrop onClick={closeModalHandler}>
             <ModalView onClick={(e) => e.stopPropagation()}>
               <ExitBtn onClick={closeModalHandler}>X</ExitBtn>
@@ -68,7 +68,7 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
               </div>
             </ModalView>
           </ModalBackdrop>
-          ) : null}
+        ) : null}
       </ModalContainer>
     </>
   );
