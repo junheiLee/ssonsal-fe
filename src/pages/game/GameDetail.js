@@ -1,125 +1,142 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
-import GameInfoDetail from "../../components/game/GameInfoDetail";
-import MatchTeamInfo from "../../components/game/MatchTeamInfo";
-import ResultForm from "../../components/game/ResultForm";
-import FindAway from "../../components/game/FindAway";
-import { CloseButton, Container, Col, Row, Badge } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { getGame } from '../../services/game/GameService';
 
-
-
+import React from 'react';
+import '../../styles/game/GameDetail.css'; // React 파일 위치에 따라 상대 경로 조절
+import { SubService } from '../../service/SubService';
 
 const GameDetail = () => {
-    let { gameId } = useParams();
+  const {
+    teamSubList: hometeamSubList,
+    getSubAccept: getHometeamSubAccept,
+    getSubReject: getHometeamSubReject,
+    getSubApply: getHometeamSubApply, // 변경된 함수명
+  } = SubService(1); // 홈팀 아이디
 
-    let [gameInfo, setGameInfo] = useState({
-        homeApplicationId: null,
-        awayApplicationId: null,
-        matchStatus: -1,
+  const {
+    teamSubList: awayteamSubList,
+    getSubAccept: getAwayteamSubAccept,
+    getSubReject: getAwayteamSubReject,
+    getSubApply: getAwayteamSubApply, // 변경된 함수명
+  } = SubService(1); // 어웨이팀 아이디
 
-    });
+  return (
+    <div>
 
+      {/* ***** Welcome Area Start ***** */}
+      <div className="welcome-area container-fluid detailpage" id="welcome">
 
-    useEffect(() => {
-        fetchGame();
-    }, []);
-
-    const fetchGame = async () => {
-        try {
-            setGameInfo(await getGame(gameId));
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const navigate = useNavigate();
-    const { option } = useParams();
-
-
-
-    return (
-        <div style={{ width: "100%", maxWidth: "900px", display: "block", margin: "auto", marginTop: "10px" }}>
-            <div style={{ textAlign: "right", marginRight: "10px" }}>
-                <CloseButton
-                    onClick={() => {
-                        navigate("/games/option/" + option)
-                    }}
-                />
+        <div className="container">
+          <div className="row">
+            {/* ***** Testimonials Item Start ***** */}
+            <div className="col-lg-4 col-md-6 col-sm-12">
+              <div className="team-item">
+                HomeTeam
+                <div className="teamInfo">
+                  <div>
+                    <img src="../../images/teammark.png" alt="Team Mark" />
+                  </div>
+                  <h2>코알라 FC</h2>
+                  등급 ??? / 한줄 소개 등
+                </div>
+                <div className="subList">
+                  <h5>
+                    <span>용병 신청 리스트</span>
+                    <span>
+                      {hometeamSubList?.map(item => (
+                        <span key={item.applicantId}>{item.applicantId}</span>
+                      ))}
+                    </span>
+                  </h5>
+                  <ul>
+                    {hometeamSubList && Array.isArray(hometeamSubList) && hometeamSubList.length > 0 ? (
+                      hometeamSubList.map(item => (
+                        <li key={item.applicantId}>
+                          <div>{item.nickName}</div>
+                          <div><button onClick={() => getHometeamSubAccept(1, item.applicantId)}>승인</button></div>
+                          <div><button onClick={() => getHometeamSubReject(1, item.applicantId)}>거절</button></div>
+                        </li>
+                      ))
+                    ) : (
+                      <li>No data available</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
             </div>
-            {gameInfo.matchStatus != -1
-                ?
-                <GameInfoDetail gameInfo={gameInfo} />
-                :
-                <h1> 해당 게임 정보가 없습니다.</h1>
-            }
+            {/* ***** Testimonials Item End ***** */}
 
-            {gameInfo.matchStatus != -1 &&
-                < Container >
-                    <Row style={{ height: "50px", marginTop: "20px" }}>
-                        <Col><h3>HOME</h3></Col>
-                        <Col xs={1}></Col>
-                        <Col><h3>AWAY</h3></Col>
-                    </Row>
-                </Container>
-            }
+            {/* ***** Testimonials Item Start ***** */}
+            <div className="col-lg-4 col-md-6 col-sm-12">
+              <div className="placeInfo">
+                <b>장소</b>
+                <p>2023.11.17 (16 : 30)</p>
+              </div>
+              <div className="vsFormat">
+                <h1>VS</h1>
+                <p>5 vs 5</p>
+              </div>
+              <div className="applybtn">
+                <button onClick={() => getHometeamSubApply(1,11)}>Hometeam<br />용병으로 참여하기</button>
+                <button onClick={() => getAwayteamSubApply(1)}>Awayteam<br />용병으로 참여하기</button>
+              </div>
+            </div>
+            {/* ***** Testimonials Item End ***** */}
 
-            { // 양 팀이 확정 됐을 때, 결과 기입 창
-                gameInfo.matchStatus == 1 && gameInfo.awayId != null
-                    ?
-                    <>
-                        <Container>
-                            <Row>
-                                <Col><ResultForm gameId={gameId} target={"home"} /></Col>
-                                <Col xs={1}></Col>
-                                <Col><ResultForm gameId={gameId} target={"away"} /></Col>
-                            </Row>
-                        </Container>
-                    </>
-                    : null
-            }
-            { // 종료 후 결과 창
-                gameInfo.matchStatus == 2
-                    ?
-                    <>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <h5>
-                                        <Badge bg="success">{gameInfo.homeResult}</Badge>
-                                    </h5>
-                                </Col>
-                                <Col xs={1}></Col>
-                                <Col><h5>
-                                    <Badge bg="success">{gameInfo.awayResult}</Badge>
-                                </h5></Col>
-                            </Row>
-                        </Container>
-                    </>
-                    : null
-            }
+            {/* ***** Testimonials Item Start ***** */}
+            <div className="col-lg-4 col-md-6 col-sm-12">
+              <div className="team-item">
+                AwayTeam
+                <div className="teamInfo">
+                  <div>
+                    <img src="../../images/shark.png" alt="Team Shark" />
+                  </div>
+                  <h2>상어 FC</h2>
+                  등급 ??? / 한줄 소개 등
+                </div>
+                <div className="subList">
+                  <h5>
+                    <span>용병 신청 리스트</span>
+                    <span>1 / 3</span>
+                  </h5>
+                  <ul>
+                    {awayteamSubList && Array.isArray(awayteamSubList) && awayteamSubList.length > 0 ? (
+                      awayteamSubList.map(item => (
+                        <li key={item.applicantId}>
+                          <div>{item.nickName}</div>
+                          <div><button onClick={() => getAwayteamSubAccept(item.applicantId)}>승인</button></div>
+                          <div><button onClick={() => getAwayteamSubReject(item.applicantId)}>거절</button></div>
+                        </li>
+                      ))
+                    ) : (
+                      <li>No data available</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {/* ***** Testimonials Item End ***** */}
+          </div>
+        </div>
+      </div>
+      {/* ***** Welcome Area End ***** */}
 
-            {
-                gameInfo.homeApplicationId !== null && (
-                    <Container>
-                        <Row>
-                            <Col>
-                                <MatchTeamInfo matchTeamId={gameInfo.homeApplicationId} matchStatus={gameInfo.matchStatus} />
-                            </Col>
-                            <Col xs={1} md="auto"><h1>VS</h1> </Col> {/*난중에 사진넣거나 해도 조흘듯*/}
-                            <Col>
-                                {gameInfo.awayId == null
-                                    ? <FindAway />
-                                    : <MatchTeamInfo matchTeamId={gameInfo.awayApplicationId} matchStatus={gameInfo.matchStatus} />}
-                            </Col>
-                        </Row>
-                    </Container>
-                )
-            }
-        </div >
-    )
+      {/* jQuery */}
+      <script src="/js/jquery-2.1.0.min.js"></script>
 
-}
+      {/* Bootstrap */}
+      <script src="/js/popper.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+
+      {/* Plugins */}
+      <script src="/js/scrollreveal.min.js"></script>
+      <script src="/js/waypoints.min.js"></script>
+      <script src="/js/jquery.counterup.min.js"></script>
+      <script src="/js/imgfix.min.js"></script>
+
+      {/* Global Init */}
+      <script src="/js/custom.js"></script>
+
+    </div>
+  );
+};
 
 export default GameDetail;
