@@ -1,0 +1,31 @@
+.game-list {
+    width: 80%;
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.left-button-box {
+    width: 60%;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.right-button-box {
+    width: 40%;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.fix-horizon-size {
+    width: "100%";
+    max-width: "900px";
+    display: "block";
+    margin: "auto";
+}
