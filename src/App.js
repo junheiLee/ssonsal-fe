@@ -8,6 +8,9 @@ import Loading from './components/fix/Loading';
 import Main from './pages/Main';
 
 const Rank = lazy(() => import('./pages/rank/Rank'));
+const GameList = lazy(() => import('./pages/game/GameList'));
+const GameDetail = lazy(()=>import('./pages/game/GameDetail'));
+const GameForm = lazy(() => import('./pages/game/GameForm'))
 const TeamList = lazy(() => import('./pages/team/TeamList'));
 const TeamDetail = lazy(() => import('./pages/team/TeamDetail'));
 const TeamManager = lazy(() => import('./pages/team/TeamManager'));
@@ -20,6 +23,8 @@ const ReportForm = lazy(() => import('./pages/review/ReportForm'));
 
 const App = () => {
 
+
+
   return (
     <div className="App">
 
@@ -27,7 +32,9 @@ const App = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path='/' element={<Main />} />
-            <Route path="/teams" element={<TeamList />} />
+            <Route path="/games/option/:option" element={<GameList />} />
+            <Route path="/games/:option/:option" element={<GameDetail />} />
+            <Route path="/games/new" element={<GameForm />} />
             <Route path='/teams/:id' element={<TeamDetail />} />
             <Route path='/teams/:id/managers' element={<TeamManager />} />
             <Route path='/ranks' element={<Rank />} />
