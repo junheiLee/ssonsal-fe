@@ -3,7 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
-import loginUser from './loginUser'
+import loginUser from './LoginUser'
 
 const reducers = combineReducers({
   loginUser: loginUser.reducer
