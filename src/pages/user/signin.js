@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
-import '../css/logintest.css';
+import '../../styles/user/login.css';
+import { login } from "../../store/loginUser.js";
+import { useDispatch } from 'react-redux';
+
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formSchema = yup.object({
     email: yup.string().required('이메일을 입력해주세요').email('이메일 형식이 아닙니다.'),
@@ -37,8 +41,10 @@ const LoginForm = () => {
   const onSubmit = async (formData) => {
     try {
       const response = await axios.post('/user/sign-in', formData);
+
+      dispatch(login(response.data.data));
       navigate('/user/profile');
-      console.log(response);
+
     } catch (error) {
       console.log(error);
     }

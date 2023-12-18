@@ -6,17 +6,7 @@ import Footer from './components/fix/Footer';
 import Header from './components/fix/Header';
 import Loading from './components/fix/Loading';
 import Main from './pages/Main';
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-import SignIn from "./components/user/signin.js";
-import SignUp from "./components/user/signup.js";
-import MyProfile from "./components/user/myprofile.js";
 
-
-        
 
 const Rank = lazy(() => import('./pages/rank/Rank'));
 const GameList = lazy(() => import('./pages/game/GameList'));
@@ -30,6 +20,9 @@ const TeamEdit = lazy(() => import('./pages/team/TeamEdit'));
 const SubReviews = lazy(() => import('./pages/review/SubReviews'));
 const TeamReviews = lazy(() => import('./pages/review/TeamReviews'));
 const ReportForm = lazy(() => import('./pages/review/ReportForm'));
+const SignIn = lazy(()=> import( './pages/user/signin'));
+const SignUp = lazy(()=>import('./pages/user/signup'));
+const MyProfile = lazy(()=>import('./pages/user/myprofile'));
 
 
 const App = () => {
@@ -46,6 +39,7 @@ const App = () => {
             <Route path="/games/option/:option" element={<GameList />} />
             <Route path="/games/:option/:option" element={<GameDetail />} />
             <Route path="/games/new" element={<GameForm />} />
+            <Route path="/teams" element={<TeamList />}/>
             <Route path='/teams/:id' element={<TeamDetail />} />
             <Route path='/teams/:id/managers' element={<TeamManager />} />
             <Route path='/ranks' element={<Rank />} />

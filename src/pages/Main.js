@@ -1,7 +1,12 @@
 import React from 'react';
 import '../styles/Main.css';
+import { useSelector } from 'react-redux';
 
 const Main = () => {
+
+    const loginUser = useSelector((state) => state.loginUser);
+    console.log(loginUser);
+
     return (
         <>
             {/* ***** Welcome Area Start ***** */}
