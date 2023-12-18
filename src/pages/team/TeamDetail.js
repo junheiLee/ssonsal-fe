@@ -5,6 +5,10 @@ import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Detail.css';
 import { useParams } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
+import { deleteTeam } from "../../store/LoginUser";
+import { useDispatch } from 'react-redux';
+
 
 const Detail = () => {
 
@@ -14,7 +18,7 @@ const Detail = () => {
   const [userLevel, setUserLevel] = useState('');
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getDetail();
@@ -23,7 +27,12 @@ const Detail = () => {
   const getDetail = async () => {
 
     try {
-      const response = await axios.get('/api/teams/' + id);
+      const response = await axios.get('/api/teams/' + id, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       setUserLevel(response.data.data.userLevel);
       setDetail(response.data.data.detail);
       setMembers(response.data.data.members);
@@ -43,7 +52,12 @@ const Detail = () => {
     }
 
     try {
-      const response = await axios.post(`/api/members/${teamId}/application`);
+      const response = await axios.post(`/api/members/${teamId}/application`, null, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.teamName + " 팀에 신청 되었습니다.");
       getDetail();
     } catch (error) {
@@ -58,7 +72,12 @@ const Detail = () => {
     }
 
     try {
-      const response = await axios.delete(`/api/members/${teamId}/application`);
+      const response = await axios.delete(`/api/members/${teamId}/application`, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert("신청이 취소되었습니다.");
       getDetail();
     } catch (error) {
@@ -73,8 +92,14 @@ const Detail = () => {
     }
 
     try {
-      const response = await axios.delete(`/api/members/${teamId}/team`);
+      const response = await axios.delete(`/api/members/${teamId}/team`, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.teamName + " 팀을 탈퇴하였습니다.");
+      dispatch(deleteTeam());
       getDetail();
     } catch (error) {
       errorResponse(error);
@@ -83,10 +108,7 @@ const Detail = () => {
 
   const errorResponse = (error) => {
 
-    if (error.response.data.httpStatus === 401) {
-      alert(error.response.data.message);
-      navigate('/user/sign-in', { replace: true });
-    } else if (error.response.data.httpStatus === 403 || error.response.data.httpStatus === 409
+    if (error.response.data.httpStatus === 403 || error.response.data.httpStatus === 409
       || error.response.data.httpStatus === 404 || error.response.data.httpStatus === 400) {
       alert(error.response.data.message);
     } else {
@@ -119,7 +141,7 @@ const Detail = () => {
               </Col>
               )}
               <Col lg={12} className="col-4 col-lg-12">
-                <Link to="#">출전 경기 보기</Link>
+                <Link to={`/games/teams/${id}`}>출전 경기 보기</Link>
               </Col>
               <Col lg={12} className="col-4 col-lg-12">
                 <Link to={`/reviews/team/${id}`}>팀 리뷰 보기</Link>

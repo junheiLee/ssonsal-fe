@@ -14,11 +14,14 @@ const loginUser = createSlice({
     logOut(loginUser) {
       loginUser.id = 0;
       loginUser.teamId = 0;
-    }
+    },
+    deleteTeam(loginUser) {
+      loginUser.teamId = 0;
+    },
   }
 });
 
-export const { logIn, logOut } = loginUser.actions;
+export const { logIn, logOut, deleteTeam } = loginUser.actions;
 
 
 export default loginUser;

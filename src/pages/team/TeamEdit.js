@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Create.css';
 import { useParams } from 'react-router-dom';
-
+import { getCookie } from '../../services/UserService';
 
 const TeamEdit = () => {
 
@@ -25,7 +25,12 @@ const TeamEdit = () => {
 
     const getForm = async () => {
         try {
-            const response = await axios.get('/api/teams/' + id + '/edit');
+            const response = await axios.get('/api/teams/' + id + '/edit', {
+                headers: {
+                    "Content-Type": "application/json",
+                    ssonToken: getCookie("token")
+                },
+            });
             setForm(response.data.data.form);
         } catch (error) {
             console.log(error);
@@ -75,16 +80,17 @@ const TeamEdit = () => {
         formData.set('recruit', form.recruit);
 
         try {
-            const response = await axios.patch('/api/teams/'+id, formData);
+            const response = await axios.patch('/api/teams/' + id, formData, {
+                headers: {
+                    ssonToken: getCookie("token")
+                },
+            });
             alert('팀 정보 수정 성공!')
             console.log(response);
             navigate('/teams/' + response.data.data.teamId, { replace: true });
         } catch (error) {
 
-            if (error.response.data.httpStatus === 401) {
-                alert(error.response.data.message);
-                navigate('/user/login', { replace: true });
-            } else if (error.response.status === 400) {
+            if (error.response.status === 400) {
                 alert(error.response.data.message);
             } else if (error.response.data.httpStatus === 400 || error.response.data.httpStatus === 409) {
                 alert(error.response.data.message);

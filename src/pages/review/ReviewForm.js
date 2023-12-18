@@ -4,6 +4,7 @@ import '../../styles/team/index.css';
 import '../../styles/review/reviewform.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
 import {
   ModalContainer,
   ModalBackdrop,
@@ -37,6 +38,11 @@ const ReviewForm = (targetId, gameId, reviewCode) => {
           comment: comment,
           skillScore: skillScore,
           mannerScore: mannerScore,
+        },{
+          headers: {
+            "Content-Type": "application/json",
+            ssonToken: getCookie("token")
+          },
         });
         alert("작성 성공!");
         console.log(response);
