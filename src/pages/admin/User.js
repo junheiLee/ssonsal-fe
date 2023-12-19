@@ -8,6 +8,7 @@ import PermissionButton from './adminScript/action_script/PermissionButton';
 import EmailPublishButton from './adminScript/action_script/EmailPublishButton';
 import '../../styles/admin/AdminMain.css';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
 
 const User = () => {
   const navigate = useNavigate();
@@ -22,7 +23,12 @@ const User = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/user");
+      const response = await axios.get("/api/admin/user", {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       setUserList(response.data.data.userList);
     } catch (error) {
     

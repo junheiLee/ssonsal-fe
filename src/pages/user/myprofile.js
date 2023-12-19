@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import { doLogOut, getCookie } from '../../services/UserService.js';
 import { logOut } from "../../store/LoginUser.js";
 
-
-
 const UserComponent = () => {
   const [userData, setUserData] = useState(null);
   let isNewToken = false;
