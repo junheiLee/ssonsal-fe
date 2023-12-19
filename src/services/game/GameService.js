@@ -12,7 +12,7 @@ export const getGames = async (option) => {
             },
         });
 
-        if(response.data.code === "SUCCESS") {
+        if (response.data.code === "SUCCESS") {
             let games = response.data.data.games;
             return games || [];
         } else {
@@ -31,15 +31,16 @@ export const getGame = async (gameId) => {
         const response = await axios.get(`/games/${gameId}`, {
             headers: {
                 "Content-Type": "application/json",
-                ssonToken: getCookie("token")            }
+                ssonToken: getCookie("token")
+            }
         });
 
-        if(response.data.code === "SUCCESS") {
+        if (response.data.code === "SUCCESS") {
             return response.data.data.gameInfo;
         }
 
     } catch (error) {
-        console.error("getGames 오류: ", error);
+        console.error("getGame 오류: ", error);
         throw error;
     }
 }
@@ -51,16 +52,37 @@ export const createGame = async (createdGame) => {
         const response = await axios.post(`/games`, JSON.stringify(createdGame), {
             headers: {
                 "Content-Type": "application/json",
-                ssonToken: getCookie("token")            }
+                ssonToken: getCookie("token")
+            }
         })
 
-        if(response.data.code === "SUCCESS") {
+        if (response.data.code === "SUCCESS") {
             return response.data.data.createdGameId;
         } else {
             console.log(response.data.code);
         }
     } catch (error) {
         console.error("createGame 오류: ", error);
+        throw error;
+    }
+}
+
+export const enterResult = async (gameId, values) => {
+
+    console.log("values=", values);
+    try {
+        const response = await axios.post(`/games/${gameId}/result`, values, {
+            headers: {
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
+            }
+        })
+
+        return response.data;
+        
+    } catch (error) {
+        console.error("insertResult 오류: ", error);
+        alert(error.response.data.message);
         throw error;
     }
 }
