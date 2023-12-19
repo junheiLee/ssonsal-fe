@@ -64,11 +64,13 @@ const TeamForm = () => {
     } catch (error) {
       if (error.response.status === 400) {
         alert(error.response.data.message);
+        console.log(error);
       } else if (
         error.response.data.httpStatus === 400 ||
         error.response.data.httpStatus === 409
       ) {
         alert(error.response.data.message);
+        console.log(error);
       } else {
         alert("알 수 없는 오류가 발생했습니다.");
         navigate("/*", { replace: true });
@@ -77,7 +79,7 @@ const TeamForm = () => {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-5">
       <h1 className="formexplan">프로필</h1>
 
       <Container className="text-center mt-5">
@@ -126,7 +128,7 @@ const TeamForm = () => {
           <Container className="locadate mb-4">
             <h2>선호 시간</h2>
             <Form.Select id="time" name="preferredTime">
-              <option>상관 없음</option>
+              <option>상관없음</option>
               <option>주중/오전</option>
               <option>주중/오후</option>
               <option>주말/오전</option>
@@ -135,7 +137,10 @@ const TeamForm = () => {
 
             <h2>선호 지역</h2>
             <Form.Select id="area" name="preferredArea">
-              <option>지역 모름</option>
+              <option>상관없음</option>
+              <option>서울</option>
+              <option>경기</option>
+              <option>지방</option>
             </Form.Select>
 
             <h1 className="formexplan">팀원 모집</h1>
