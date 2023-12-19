@@ -1,12 +1,11 @@
-import axios from 'axios';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import '../../styles/team/index.css';
-import '../../styles/team/Create.css';
-import { useNavigate } from 'react-router-dom';
-import { getCookie } from '../../services/UserService';
+import axios from "axios";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import "../../styles/team/index.css";
+import "../../styles/team/Create.css";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../services/UserService";
 
 const TeamForm = () => {
-
   const navigate = useNavigate();
 
   const setThumbnail = (event) => {
@@ -46,61 +45,74 @@ const TeamForm = () => {
   const createTeam = async (event) => {
     event.preventDefault();
 
-    const recruitValue = document.getElementById('recruit').checked ? 1 : 0;
+    const recruitValue = document.getElementById("recruit").checked ? 1 : 0;
 
-    const formData = new FormData(document.getElementById('teamForm'));
-    formData.set('skillScore', -1);
-    formData.set('mannerScore', -1);
-    formData.set('recruit', recruitValue);
+    const formData = new FormData(document.getElementById("teamForm"));
+    formData.set("skillScore", -1);
+    formData.set("mannerScore", -1);
+    formData.set("recruit", recruitValue);
 
     try {
-      const response = await axios.post('/api/teams', formData, {
+      const response = await axios.post("/api/teams", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          ssonToken: getCookie("token")
+          "Content-Type": "multipart/form-data",
+          ssonToken: getCookie("token"),
         },
       });
-      alert(response.data.data.teamName + '팀 생성 완료!');
-      navigate('/teams/' + response.data.data.teamId, { replace: true });
+      alert(response.data.data.teamName + "팀 생성 완료!");
+      navigate("/teams/" + response.data.data.teamId, { replace: true });
     } catch (error) {
-
       if (error.response.status === 400) {
         alert(error.response.data.message);
-      } else if (error.response.data.httpStatus === 400 || error.response.data.httpStatus === 409) {
+      } else if (
+        error.response.data.httpStatus === 400 ||
+        error.response.data.httpStatus === 409
+      ) {
         alert(error.response.data.message);
       } else {
-        alert('알 수 없는 오류가 발생했습니다.');
-        navigate('/*', { replace: true });
+        alert("알 수 없는 오류가 발생했습니다.");
+        navigate("/*", { replace: true });
       }
     }
   };
 
-
   return (
-
     <Container className="mt-5">
-      <h1 className='formexplan'>프로필</h1>
+      <h1 className="formexplan">프로필</h1>
 
       <Container className="text-center mt-5">
-        <Form action="/teams" id="teamForm" method="POST" encType="multipart/form-data">
+        <Form
+          action="/teams"
+          id="teamForm"
+          method="POST"
+          encType="multipart/form-data"
+        >
           <Row className="mb-4">
             <Col lg={4} className="mb-5">
               <div id="image_container"></div>
-              <Form.Label className="input-file-button mt-2 logobtn" htmlFor="input-file">
+              <Form.Label
+                className="input-file-button mt-2 logobtn"
+                htmlFor="input-file"
+              >
                 로고 등록
               </Form.Label>
               <input
                 type="file"
                 id="input-file"
                 name="logo"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 onChange={(event) => setThumbnail(event)}
               />
             </Col>
 
             <Col lg={8} className="teampro">
               <p className="mb-2">팀명</p>
-              <Form.Control type="text" name="name" id="name" placeholder="ex. 잘하는팀" />
+              <Form.Control
+                type="text"
+                name="name"
+                id="name"
+                placeholder="ex. 잘하는팀"
+              />
               <p className="mt-5">한 줄 소개</p>
               <Form.Control
                 as="textarea"
@@ -110,7 +122,7 @@ const TeamForm = () => {
             </Col>
           </Row>
 
-          <h1 className='formexplan'>선호 정보</h1>
+          <h1 className="formexplan">선호 정보</h1>
           <Container className="locadate mb-4">
             <h2>선호 시간</h2>
             <Form.Select id="time" name="preferredTime">
@@ -126,19 +138,26 @@ const TeamForm = () => {
               <option>지역 모름</option>
             </Form.Select>
 
-            <h1 className='formexplan'>팀원 모집</h1>
-            <Form.Check type="checkbox" className="mb-5 mt-4 ms-3" label="팀원을 모집합니다." id="recruit" />
+            <h1 className="formexplan">팀원 모집</h1>
+            <Form.Check
+              type="checkbox"
+              className="mb-5 mt-4 ms-3"
+              label="팀원을 모집합니다."
+              id="recruit"
+            />
           </Container>
 
-          <Button className="mt-5" id='submitbtn' onClick={(event) => createTeam(event)}>
+          <Button
+            className="mt-5"
+            id="submitbtn"
+            onClick={(event) => createTeam(event)}
+          >
             팀 생성 하기
           </Button>
         </Form>
       </Container>
-
     </Container>
   );
-}
-
+};
 
 export default TeamForm;
