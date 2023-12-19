@@ -24,10 +24,10 @@ const SignUpForm = () => {
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
         "영문 숫자 특수문자 포함 8자리 이상을 입력해주세요."
       ),
-    confirmPasswordd: yup
+    confirmPassword: yup
       .string()
-      .required("Password is mendatory")
-      .oneOf([yup.ref("password")], "Passwords does not match"),
+      .required("비밀번호 일치 확인이 필요합니다")
+      .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다."),
     name: yup
       .string()
       .min(2, "최소 2자 이상 가능합니다")
@@ -76,7 +76,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async (formData) => {
     try {
-      const response = await axios.post('/api/user/sign-up', formData);
+      const response = await axios.post("/api/user/sign-up", formData);
       console.log(response.data);
       navigate("/user/sign-in");
     } catch (error) {
@@ -113,6 +113,17 @@ const SignUpForm = () => {
             {...register("password")}
           />
           {errors.password && <p>{errors.password.message}</p>}
+        </label>
+        <br />
+        <label>
+          <input
+            type="password"
+            name="confirmPassword"
+            className="input"
+            placeholder="confirmPassword"
+            {...register("confirmPassword")}
+          />
+          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </label>
         <br />
         <label>
