@@ -1,11 +1,13 @@
 import axios from "axios";
+import { getCookie } from '../UserService.js';
 
 export const getSubs = async (matchApplicationId) => {
 
     try {
         const response = await axios.get(`/match-teams/${matchApplicationId}/subs`, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
             },
         });
 
@@ -28,7 +30,8 @@ export const getSubApplicants = async (matchApplicationId) => {
 
         const response = await axios.get(`/match-applications/${matchApplicationId}/sub-applicants`, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
             },
         });
 

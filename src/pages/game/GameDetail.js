@@ -10,7 +10,7 @@ import { getGame } from '../../services/game/GameService';
 
 
 
-const GameDetail = () => {
+const GameDetail = (id) => {
     let { gameId } = useParams();
 
     let [gameInfo, setGameInfo] = useState({
@@ -43,7 +43,9 @@ const GameDetail = () => {
             <div style={{ textAlign: "right", marginRight: "10px" }}>
                 <CloseButton
                     onClick={() => {
-                        navigate("/games/option/" + option)
+                        option == "teams" || option == "users"
+                            ? navigate(-1) //나중에 생각하자
+                            : navigate(`/games/option/${option}`)
                     }}
                 />
             </div>
@@ -106,11 +108,11 @@ const GameDetail = () => {
                             <Col>
                                 <MatchTeamInfo matchTeamId={gameInfo.homeApplicationId} matchStatus={gameInfo.matchStatus} />
                             </Col>
-                            <Col xs={1} md="auto"><h1>VS</h1> </Col> {/*난중에 사진넣거나 해도 조흘듯*/}
+                            <Col xs={1} md="auto"> {gameInfo.findAway && <h1>VS</h1>} </Col> {/*난중에 사진넣거나 해도 조흘듯*/}
                             <Col>
-                                {gameInfo.awayId == null
-                                    ? <FindAway />
-                                    : <MatchTeamInfo matchTeamId={gameInfo.awayApplicationId} matchStatus={gameInfo.matchStatus} />}
+                                {gameInfo.matchStatus == 0 && <FindAway />}
+                                {gameInfo.matchStatus == 1 && gameInfo.awayApplicationId == null && null}
+                                {gameInfo.awayApplicationId != null && <MatchTeamInfo matchTeamId={gameInfo.awayApplicationId} matchStatus={gameInfo.matchStatus} />}
                             </Col>
                         </Row>
                     </Container>

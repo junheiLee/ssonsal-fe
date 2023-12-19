@@ -10,7 +10,7 @@ const GameListElement = ({ game }) => {
     return (
         <>
             <ListGroup.Item
-                onClick={() => { navigate(`/games/`+ option + "/" + game.id) }}
+                onClick={() => { navigate(`/games/${option}/${game.id}`) }}
                 as="li"
                 className="d-flex justify-content-between align-items-start"
             >

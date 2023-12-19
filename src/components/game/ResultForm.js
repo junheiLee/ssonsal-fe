@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Form, Button, Collapse, Container, Row, Col } from 'react-bootstrap';
 import "../../styles/game/component/ResultForm.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { enterResult } from "../../services/game/GameService";
+
 
 const ResultForm = ({ gameId, target }) => {
 
@@ -21,10 +23,20 @@ const ResultForm = ({ gameId, target }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // await inputResult(gameId, values); -> /games/1/result
-
-            navigate(`/games/` + option + "/" + gameId);
+            let response = await enterResult(gameId, values);
+            
+            if(response.code == "SUCCESS"){
+                navigate(`/games/${option}/${gameId}`);
+            } else if(response.code == "WAIT_FOR_ANOTHER_TEAM") {
+                alert(response.message);
+                return;
+            } else {
+                alert(response.message);
+                return;
+            }
+            
         } catch (error) {
+            console.log(error);
         }
     }
 

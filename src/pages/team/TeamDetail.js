@@ -141,7 +141,7 @@ const Detail = () => {
               </Col>
               )}
               <Col lg={12} className="col-4 col-lg-12">
-                <Link to={`/games/teams/${id}`}>출전 경기 보기</Link>
+                <Link to={`/games/option/teams?id=${id}`}>출전 경기 보기</Link>
               </Col>
               <Col lg={12} className="col-4 col-lg-12">
                 <Link to={`/reviews/team/${id}`}>팀 리뷰 보기</Link>

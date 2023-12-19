@@ -15,17 +15,19 @@ const GameForm = () => {
         option = setOption;
     }
 
-    window.onload = function () {
-        const target = document.querySelector("#gameForm");
-        target.addEventListener("submit", onSubmit);
-    }
-
-
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
+        const target = document.querySelector("#gameForm");
+        target.addEventListener("submit", onSubmit);
+
         const game = handleFormData();
+
+        if((game["findAway"] === 'false') && (game["subCount"]*1 <= 0)){
+            alert("구인 대상이 있어야 합니다. (용병을 구하거나, 상대를 찾아 주세요.");
+            return;
+        } 
+
         handleOption();
 
         try {
@@ -33,6 +35,9 @@ const GameForm = () => {
             navigate(`/games/` + option + `/` + gameId);
         } catch (error) {
             console.error("GameForm 오류: ", error);
+            if(error.response.status == 400){
+                alert(error.response.data.message);
+            }
         }
 
     }
@@ -46,6 +51,7 @@ const GameForm = () => {
         gameForm.forEach((value, key) => {
             game[key] = value;
         });
+
         return game;
     }
 
@@ -72,7 +78,8 @@ const GameForm = () => {
                     <MatchTeamForm />
                 </Form.Group>
 
-                <Button style={{ marginTop: "30px" }} size="lg" variant="success" type="submit">등록</Button>{' '}
+                <Button style={{ marginTop: "30px" }} size="lg" variant="success" type="button"
+                    onClick={(e) => { onSubmit(e) }}>등록</Button>{' '}
             </Form>
         </div>
     )
