@@ -19,7 +19,7 @@ export const getSubs = async (matchApplicationId) => {
             return [];
         }
     } catch (error) {
-        console.error("getGames 오류: ", error);
+        console.error("getSubs 오류: ", error);
         return [];
     }
 }

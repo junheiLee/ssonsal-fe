@@ -32,7 +32,7 @@ const GameForm = () => {
 
         try {
             const gameId = await createGame(game);
-            navigate(`/games/` + option + `/` + gameId);
+            navigate(`/games/${option}/${gameId}`);
         } catch (error) {
             console.error("GameForm 오류: ", error);
         }

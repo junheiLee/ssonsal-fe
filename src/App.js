@@ -43,10 +43,15 @@ const App = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path='/' element={<Main />} />
+
             <Route path="/games/option/:option" element={<GameList />} />
-            <Route path="/games/:option/:option" element={<GameDetail />} />
+
+            <Route path="/games/:option/:gameId" element={<GameDetail />} />
+
             <Route path="/games/new" element={<GameForm />} />
+
             <Route path="/teams" element={<TeamList />}/>
+            
             <Route path='/teams/:id' element={<TeamDetail />} />
             <Route path='/teams/:id/managers' element={<TeamManager />} />
             <Route path='/ranks' element={<Rank />} />
