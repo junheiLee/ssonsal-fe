@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { doLogOut, getCookie } from '../../services/UserService.js';
+import { logOut } from "../../store/LoginUser.js";
 
 
 const UserComponent = () => {
