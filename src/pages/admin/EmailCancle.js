@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/admin/EmailSubscriptionButton.css';
+import { getCookie } from '../../services/UserService';
 
 const EmailUnsubscribeButton = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,13 @@ const EmailUnsubscribeButton = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.delete('/api/unsubscribe');
+      const response = await axios.delete('/api/unsubscribe',
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
 
       setSuccess(true);
       console.log('이메일 수신 취소 성공', response.data);

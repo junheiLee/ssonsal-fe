@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/admin/EmailSubscriptionButton.css';
+import { getCookie } from '../../services/UserService';
 
 const EmailSubscriptionButton = () => {
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,13 @@ const EmailSubscriptionButton = () => {
       // 이메일 인증 확인중으로 상태 업데이트
       setConfirming(true);
 
-      const response = await axios.post('/api/memberSubscribe');
+      const response = await axios.post('/api/memberSubscribe',
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
 
       setSuccess(true);
       console.log('이메일 구독 성공', response.data);

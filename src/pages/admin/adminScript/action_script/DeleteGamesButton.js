@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getCookie } from '../../../../services/UserService';
 
 const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
 
@@ -11,7 +12,7 @@ const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
       return acc;
     }, {}));
   }, [selectedGameIds]);
-
+  
   const handleGameCheckboxChange = (gameId) => {
     setGameSelection((prevGameSelection) => ({
       ...prevGameSelection,
@@ -35,7 +36,13 @@ const DeleteGamesButton = ({ selectedGameIds, onChange, onGamesDeleted }) => {
     };
 
     try {
-      const response = await axios.post('/api/management/game/management', requestData);
+      const response = await axios.post('/api/management/game/management', requestData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
     
       console.log('서버 응답:', response);
     

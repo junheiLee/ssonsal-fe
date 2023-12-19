@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // 부트스트랩 CSS 파일을 가져옴
 import '../../styles/admin/EmailSubscriptionButton.css';
+import { getCookie } from '../../services/UserService';
 
 const MessageSubscriptionButton = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,10 @@ const MessageSubscriptionButton = () => {
       setError(null);
 
       const response = await axios.post('/api/subscribeMessage', {
-
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
       });
 
       setSuccess(true);

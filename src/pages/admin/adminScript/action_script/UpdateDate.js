@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { getCookie } from '../../../../services/UserService';
 
 const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) => {
   const updateDate = async (e) => {
@@ -10,7 +11,13 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
       console.log("선택한 달:", month);
       console.log("포맷된 날짜:", formattedDate);
   
-      const response = await axios.post('/api/management/stats/changeMonth', { selectedDate: formattedDate });
+      const response = await axios.post('/api/management/stats/changeMonth', { selectedDate: formattedDate },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       console.log("서버 응답:", response);
   
       if (response.status === 200) {

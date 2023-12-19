@@ -7,6 +7,7 @@ import '../../styles/admin/AdminMain.css';
 import Memo from '../admin/adminScript/fix_script/Memo';
 import Calendar from '../admin/adminScript/fix_script/Calendar'
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../services/UserService';
 //import { getCookie, doLogOut } from '../UserService.js';
 // //import { logOut } from "../../store/loginUser.js";
 // const handleLogout = async () => {
@@ -28,7 +29,13 @@ const AdminMain = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/main");
+      const response = await axios.get("/api/admin/main",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       const data = response.data.data;
       setStatsData(data.dailyStats);
       console.log(response.data + "aa");

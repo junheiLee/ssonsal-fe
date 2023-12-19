@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../../styles/admin/EmailSubscriptionButton.css';
+import { getCookie } from '../../services/UserService';
 
 const SmsUnsubscribeButton = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,14 @@ const SmsUnsubscribeButton = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.delete('/api/unsubscribeMessage');
+      const response = await axios.delete('/api/unsubscribeMessage',
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      }
+      );
 
       setSuccess(true);
       console.log('SMS 수신 취소 성공', response.data);
