@@ -35,6 +35,9 @@ const GameForm = () => {
             navigate(`/games/` + option + `/` + gameId);
         } catch (error) {
             console.error("GameForm 오류: ", error);
+            if(error.response.status == 400){
+                alert(error.response.data.message);
+            }
         }
 
     }
