@@ -43,10 +43,10 @@ const LoginForm = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const response = await axios.post("/api/user/sign-in", formData);
+      const response = await axios.post("/user/sign-in", formData);
 
       dispatch(logIn(response.data.data));
-      navigate("/user/profile");
+      navigate("/user/profile/"+response.data.data.id);
     } catch (error) {
       console.log(error);
     }

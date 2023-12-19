@@ -58,7 +58,7 @@ const Header = () => {
                                         loginUser.id !== 0
                                             ?
                                             <>
-                                                <li><Link to="/user/profile">MyPage</Link></li>
+                                                <li><Link to={`/user/profile/${loginUser.id}`}>MyPage</Link></li>
                                                 <li onClick={() => { handleLogout(); }}><Link to="">LogOut</Link></li>
                                             </>
                                             :
