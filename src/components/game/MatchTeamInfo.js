@@ -15,10 +15,10 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
         gameId: -1,
         logoUrl: "",
         name: "",
-        sillScore: -1,
+        skillScore: "-",
         uniform: "없음",
-        subCount: -1,
-        havingSubCount: -1
+        subCount: 0,
+        havingSubCount: 0
     });
 
     const fetchMatchTeamInfo = async () => {
@@ -82,7 +82,11 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                                 <h4>{teamInfo.name}</h4>
                                 <div style={{ marginTop: "20%" }}>
                                     <Badge style={{ margin: "1px" }} bg="secondary">점수</Badge>
-                                    <span> {teamInfo.skillScore} </span>
+                                    <span>
+                                        {teamInfo.skillScore == -1
+                                            ? "  -"
+                                            : teamInfo.skillScore}
+                                    </span>
                                 </div>
                                 <div>
                                     <Badge style={{ margin: "1px" }} bg="secondary">유니폼</Badge>

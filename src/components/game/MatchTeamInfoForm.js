@@ -16,13 +16,12 @@ const MatchTeamInfoForm = () => {
 
     return (
         <>
-            <hr></hr>
 
-            <Row style={{ textAlign: "left", marginTop: "50px" }}>
+            <Row style={{ textAlign: "left", marginTop: "20px" }}>
 
-                <Form.Group style={{ width: "150px" }} className="mb-5">
+                <Form.Group style={{ width: "150px" }} className="mb-3">
                     <Form.Label>구하는 용병 수</Form.Label>
-                    <Form.Control as='input' name="subCount" type="number" placeholder="0" inline="true"
+                    <Form.Control as='input' name="subCount" min="0" type="number" defaultValue="0" inline="true"
                         onChange={(e) => { setSubCount(e); setNeedSub(subCount > 0); }}
                     />
                 </Form.Group>
