@@ -29,6 +29,35 @@ const AdminReport = () => {
           },
         });
           console.log(response);
+          setReportReviews(response.data.data);
+      } catch (error) {
+       
+        if (error.response) {
+          const status = error.response.status;
+          const errorCode = error.response.data.code;
+  
+         if (status === 403 && errorCode === 'ADMIN_AUTH_FAILED') {
+            alert("관리자 권한이 없습니다");
+            navigate('/*', { replace: true });
+          }
+        }
+      }
+    };
+
+
+    const updateReview = async (id,reviewId) => {
+      try {
+        const response = await axios.patch(
+          `/api/reports/${id}`,reviewId,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "ssonToken": getCookie("token")
+            },
+          }
+        );
+        alert('삭제 성공!');
+        getReportReview();
       } catch (error) {
        
         if (error.response) {
@@ -55,11 +84,12 @@ const AdminReport = () => {
       .slice(pagesVisited, pagesVisited + reviewsPerPage)
       .map((review) => (
         <tr key={review.id}>
-          <td>{review.id}</td>
-          <td>{review.reviewId}</td>
-          <td>{review.writerNickname}</td>
-          <td>{review.comment}</td>
-          <td>{review.createdAt}</td>
+  <td style={{ width: '10%' }}>{review.id}</td>
+  <td style={{ width: '10%' }}>{review.reviewId}</td>
+  <td style={{ width: '20%' }}>{review.writerNickname}</td>
+  <td style={{ width: '30%' }}>{review.reason}</td>
+  <td style={{ width: '15%' }}>{review.createdAt}</td>
+  <td style={{ width: '15%' }} onClick={() => updateReview(review.id,review.reviewId)}>삭제</td>
         </tr>
       ));
   
@@ -97,14 +127,15 @@ const AdminReport = () => {
                       <table className="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>신고 번호</th>
-                            <th>리뷰 번호</th>
-                            <th>작성자</th>
-                            <th>신고 사유</th>
-                            <th>작성일</th>
+                            <th style={{ width: '8%' }}>신고 번호</th>
+                            <th style={{ width: '8%' }}>리뷰 번호</th>
+                            <th style={{ width: '15%' }}>작성자</th>
+                            <th style={{ width: '39%' }}>신고 사유</th>
+                            <th style={{ width: '15%' }}>작성일</th>
+                            <th style={{ width: '15%' }}></th>
                           </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>{displayReviews}</tbody>
                       </table>
                       <ReactPaginate
         previousLabel={'이전'}
