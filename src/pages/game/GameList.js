@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button, ListGroup } from 'react-bootstrap';
 import GameListElement from "../../components/game/GameListElement";
 import "../../styles/game/GameList.css"
@@ -8,7 +8,7 @@ import { getGames } from '../../services/game/GameService';
 const GameList = () => {
 
     let { option } = useParams();
-    let [games, setGames] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         fetchGames();
@@ -18,12 +18,19 @@ const GameList = () => {
         }
     }, [option])
 
+    let [games, setGames] = useState([]);
+    let [forSub, setForSub] = useState(option == "for-sub");
+    let [forTeam, setForTeam] = useState(option == "for-team");
+    let [all, setAll] = useState(option == "all");
+
     const fetchGames = async () => {
         try {
-            if(option=="all") {
+            if (option == "all") {
                 setGames(await getGames(""));
-            } else{
+            } else if (forSub || forTeam) {
                 setGames(await getGames(option));
+            } else {
+                setGames(await getGames(option+`/${searchParams.get("id")}`))
             }
         } catch (error) {
             console.log(error);
@@ -31,10 +38,6 @@ const GameList = () => {
     }
 
     const navigate = useNavigate();
-
-    let [forSub, setForSub] = useState(option == "for-sub");
-    let [forTeam, setForTeam] = useState(option == "for-team");
-    let [all,  setAll] = useState(option == "all");
     let [hasTeam, setHasTeam] = useState(true); //team id 값 넣어 두기
 
 
@@ -66,7 +69,7 @@ const GameList = () => {
                     games.length !== 0
                         ?
                         games.map(game => (
-                            <GameListElement game={game} key={game.id} />
+                            <GameListElement game={game} key={game.id} id={searchParams.get("id")} />
                         ))
                         : <h4>아무 고토 업서요</h4>
                 }
