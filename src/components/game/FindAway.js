@@ -6,7 +6,7 @@ function FindAway() {
   const [open, setOpen] = useState(false);
   const teamId = 1;
   return (
-    <>
+    <div style={{marginTop:"20px"}}>
       {
         teamId != 0
         &&
@@ -50,7 +50,7 @@ function FindAway() {
           </Accordion.Item>
         </Accordion>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -13,7 +13,7 @@ export const getGames = async (option) => {
         });
 
         if(response.data.code === "SUCCESS") {
-            let games = response.data.data;
+            let games = response.data.data.games;
             return games || [];
         } else {
             console.log(response.data.message);

@@ -20,7 +20,11 @@ const GameList = () => {
 
     const fetchGames = async () => {
         try {
-            setGames(await getGames(option));
+            if(option=="all") {
+                setGames(await getGames(""));
+            } else{
+                setGames(await getGames(option));
+            }
         } catch (error) {
             console.log(error);
         }
