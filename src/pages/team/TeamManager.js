@@ -160,7 +160,7 @@ const Manager = () => {
   }
 
   return (
-    <div>
+    <div style={{marginBottom:'100px'}}>
       <Container className="mt-5 listexplanManager">
         <p></p>
         <span>팀원 목록</span>

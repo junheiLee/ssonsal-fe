@@ -28,7 +28,7 @@ const SignUpForm = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/user/sign-up', formData);
+      const response = await axios.post('/api/user/sign-up', formData);
       console.log(response.data);
       navigate('/user/sign-in');
     } catch (error) {

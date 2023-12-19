@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getCookie } from '../../../../services/UserService';
 
 const PermissionButton = ({ users, selectedUserIds, setSelectedUserIds }) => {
   const [localSelectedUserIds, setLocalSelectedUserIds] = useState([]);
@@ -27,7 +28,12 @@ const PermissionButton = ({ users, selectedUserIds, setSelectedUserIds }) => {
     };
 
     try {
-      const response = await axios.post('/api/management/user/changeRole', requestData);
+      const response = await axios.post('/api/management/user/changeRole', requestData, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
     
       if (response.data.error) {
         console.error('서버 응답 오류:', response.data.error);
