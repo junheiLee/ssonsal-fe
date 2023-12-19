@@ -76,7 +76,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async (formData) => {
     try {
-      const response = await axios.post("/user/sign-up", formData);
+      const response = await axios.post('/api/user/sign-up', formData);
       console.log(response.data);
       navigate("/user/sign-in");
     } catch (error) {
@@ -232,7 +232,7 @@ const SignUpForm = () => {
         </button>
 
         <p className="signin">
-          Already have an acount ? <a href="#">Signin</a>{" "}
+          Already have an acount ? <a href="/api/user/sign-in">Signin</a>{" "}
         </p>
       </form>
     </div>

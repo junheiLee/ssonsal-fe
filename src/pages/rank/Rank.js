@@ -32,8 +32,7 @@ const Rank = () => {
   }
 
   return (
-    <>
-      <div>
+<div style={{marginBottom:'100px'}}>
 
 
         <Container className=" mt-5">
@@ -78,7 +77,7 @@ const Rank = () => {
         </Container>
         <div style={{ clear: 'both' }}></div>
       </div>
-    </>
+
   );
 };
 

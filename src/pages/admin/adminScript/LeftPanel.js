@@ -24,7 +24,7 @@ const LeftPanel = () => {
             </li>
 
             <li className="menu-item-has-children dropdown">
-             <Link to = "/admin/Test">
+             <Link to = "/admin/report">
                 <i className="menu-icon fa fa-table"></i>리뷰 관리
              </Link>
              

@@ -41,17 +41,17 @@ const ReportForm = () => {
     }
 
     return (
-        <>
+        <div style={{marginBottom:'100px'}}>
             <Container className="mt-5">
                 <h1 style={{ fontSize: '30px' }}>리뷰 신고 하기</h1>
                 <Form onSubmit={(event) => confirmReport(event)}>
-                    <textarea name="reason" id="reason" placeholder="신고 사유를 적어주세요."></textarea>
+                    <textarea name="reason" id="reason" placeholder="신고 사유를 적어주세요. 허위 신고는 제재될 수 있습니다."></textarea>
                     <Button id="report-review" type='submit'>신고 접수</Button>
                 </Form>
 
             </Container>
 
-        </>
+        </div>
 
     );
 };
