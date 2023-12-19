@@ -11,8 +11,7 @@ import './index.css';
 const Header = () => {
 
     const loginUser = useSelector((state) => state.loginUser);
-    let [login, setLogin] = useState(false);
-    
+
     useEffect(() => {
 
     }, [loginUser.id])
@@ -56,15 +55,15 @@ const Header = () => {
                                     <li><Link to="/teams">Teams</Link></li>
 
                                     {
-                                        login
+                                        loginUser.id !== 0
                                             ?
                                             <>
                                                 <li><Link to="/user/profile">MyPage</Link></li>
-                                                <li onClick={() => { setLogin(false); handleLogout(); }}><Link to="">LogOut</Link></li>
+                                                <li onClick={() => { handleLogout(); }}><Link to="">LogOut</Link></li>
                                             </>
                                             :
                                             <>
-                                                <li onClick={() => { setLogin(true);}} ><Link to="/user/sign-in">Login </Link></li>
+                                                <li><Link to="/user/sign-in">Login </Link></li>
                                                 <li><Link to="/user/sign-up">SignUp</Link></li>
                                             </>
 

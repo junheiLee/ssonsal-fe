@@ -61,7 +61,7 @@ const GameList = () => {
   }
 
   return (
-    <>
+    <div style={{marginBottom:'100px'}}>
       <div>
         <Container>
           <Row>
@@ -136,7 +136,7 @@ const GameList = () => {
         </Container>
         <div style={{ clear: 'both' }}></div>
       </div>
-    </>
+    </div>
   );
 };
 

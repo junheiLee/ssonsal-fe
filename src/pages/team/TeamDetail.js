@@ -122,7 +122,7 @@ const Detail = () => {
   }
 
   return (
-    <>
+    <div style={{marginBottom:'100px'}}>
       <Container className="mt-5">
         <Row className="teamintro">
           <Col xs={6} lg={3} className="teamlogo">
@@ -250,7 +250,7 @@ const Detail = () => {
         </Row>
       </Container>
 
-    </>
+    </div>
   );
 };
 
