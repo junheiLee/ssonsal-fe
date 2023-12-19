@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { doLogOut, getCookie } from '../../services/UserService.js';
+import { useDispatch } from "react-redux";
+import { doLogOut, getCookie } from "../../services/UserService.js";
 import { logOut } from "../../store/LoginUser.js";
-
 
 const UserComponent = () => {
   const [userData, setUserData] = useState(null);
@@ -13,16 +12,16 @@ const UserComponent = () => {
   const navigate = useNavigate();
 
   const setIsNewToken = (zebal) => {
-    isNewToken=zebal;
-  }
+    isNewToken = zebal;
+  };
   const setToken = (newToken) => {
     token = newToken;
-  }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("/user/profile", {
+        const response = await axios.get("/api/user/profile", {
           headers: {
             ssonToken: token,
           },
@@ -58,15 +57,20 @@ const UserComponent = () => {
     try {
       // 로그아웃 요청
       setIsNewToken(false);
-      console.log("로그아웃 성공 access 재발급 안함 isNewwToken={}, token={}", isNewToken, token);
-      const logoutResponse = await axios.post("/user/logout", null, {
+      console.log(
+        "로그아웃 성공 access 재발급 안함 isNewwToken={}, token={}",
+        isNewToken,
+        token
+      );
+      const logoutResponse = await axios.post("/api/user/logout", null, {
         headers: {
-          ssonToken: token
+          ssonToken: token,
         },
       });
 
       // 쿠키 삭제
-      document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       console.log("accessToken 통과");
       // 홈 페이지로 리다이렉트
       navigate("/user/sign-in");
@@ -75,22 +79,27 @@ const UserComponent = () => {
         setIsNewToken(true);
         try {
           // 토큰이 만료되었으면 새로운 토큰을 요청
-          const refreshResponse = await axios.post("/user/refresh-token", null, {
-            headers: {
-              ssonToken: token,
-            },
-          });
+          const refreshResponse = await axios.post(
+            "/api/user/refresh-token",
+            null,
+            {
+              headers: {
+                ssonToken: token,
+              },
+            }
+          );
 
           // 새로 발급받은 토큰을 상태에 업데이트
           const newToken = refreshResponse.data.data;
           setToken(newToken);
-          console.log("재발급 한 상태 isNewToken=, newToken=", isNewToken, token);
-          if(isNewToken){
-            
+          console.log(
+            "재발급 한 상태 isNewToken=, newToken=",
+            isNewToken,
+            token
+          );
+          if (isNewToken) {
             await handleLogout();
           }
-
-          
         } catch (refreshError) {
           console.error("Error refreshing token:", refreshError);
         }
@@ -118,11 +127,15 @@ const UserComponent = () => {
       if (error.response && error.response.status === 400) {
         try {
           // 토큰이 만료되었으면 새로운 토큰을 요청
-          const refreshResponse = await axios.post("/user/refresh-token", null, {
-            headers: {
-              ssonToken: token,
-            },
-          });
+          const refreshResponse = await axios.post(
+            "/api/user/refresh-token",
+            null,
+            {
+              headers: {
+                ssonToken: token,
+              },
+            }
+          );
 
           // 새로 발급받은 토큰을 상태에 업데이트
           setToken(refreshResponse.data.data);

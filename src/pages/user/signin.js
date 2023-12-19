@@ -1,28 +1,30 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import axios from 'axios';
-import '../../styles/user/login.css';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import axios from "axios";
+import "../../styles/user/login.css";
 import { logIn } from "../../store/LoginUser.js";
-import { useDispatch } from 'react-redux';
-
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const formSchema = yup.object({
-    email: yup.string().required('이메일을 입력해주세요').email('이메일 형식이 아닙니다.'),
+    email: yup
+      .string()
+      .required("이메일을 입력해주세요")
+      .email("이메일 형식이 아닙니다."),
     password: yup
       .string()
-      .required('영문, 숫자포함 8자리를 입력해주세요.')
-      .min(8, '최소 8자 이상 가능합니다')
-      .max(15, '최대 15자 까지만 가능합니다')
+      .required("영문, 숫자포함 8자리를 입력해주세요.")
+      .min(8, "최소 8자 이상 가능합니다")
+      .max(15, "최대 15자 까지만 가능합니다")
       .matches(
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
-        '영문 숫자 특수문자 포함 8자리 이상을 입력해주세요.'
+        "영문 숫자 특수문자 포함 8자리 이상을 입력해주세요."
       ),
   });
 
@@ -31,21 +33,20 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     resolver: yupResolver(formSchema),
   });
 
   const navigateToSignUp = () => {
-    navigate('/user/sign-up');
+    navigate("/user/sign-up");
   };
 
   const onSubmit = async (formData) => {
     try {
-      const response = await axios.post('/api/user/sign-in', formData);
+      const response = await axios.post("/api/user/sign-in", formData);
 
       dispatch(logIn(response.data.data));
-      navigate('/user/profile');
-
+      navigate("/user/profile");
     } catch (error) {
       console.log(error);
     }
@@ -67,14 +68,19 @@ const LoginForm = () => {
           <h4>Please login to continue</h4>
         </div>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <input name="email" placeholder="이메일" {...register('email')} className="form-field" />
+          <input
+            name="email"
+            placeholder="이메일"
+            {...register("email")}
+            className="form-field"
+          />
           <br />
           {errors.email && <p>{errors.email.message}</p>}
           <input
             type="password"
             name="password"
             placeholder="비밀번호"
-            {...register('password')}
+            {...register("password")}
             className="form-field"
           />
           {errors.password && <p>{errors.password.message}</p>}
