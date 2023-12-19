@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/team/index.css';
 import '../../styles/team/Manage.css';
+import { getCookie } from '../../services/UserService';
 
 import { useParams } from 'react-router-dom';
 
@@ -24,16 +25,21 @@ const Manager = () => {
 
   const getManage = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/api/teams/' + id + "/managers");
+      const response = await axios.get('/api/teams/' + id + "/managers", {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       setLeader(response.data.data.teamLeader);
       setApplies(response.data.data.applies);
       setRejects(response.data.data.rejects);
       setMembers(response.data.data.members);
     } catch (error) {
-      navigate('/*', { replace: true });
+      // navigate('/*', { replace: true });
     } finally {
       setLoading(false);
-      
+
     }
   }
 
@@ -44,7 +50,12 @@ const Manager = () => {
     }
 
     try {
-      const response = await axios.patch(`/api/members/${teamId}/manager/${memberId}`);
+      const response = await axios.patch(`/api/members/${teamId}/manager/${memberId}`, null, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.userName + " 님에게 팀장을 위임하였습니다.");
       navigate('/teams/' + id, { replace: true });
     } catch (error) {
@@ -59,7 +70,12 @@ const Manager = () => {
     }
 
     try {
-      const response = await axios.post(`/api/members/${teamId}/manager/${memberId}`);
+      const response = await axios.post(`/api/members/${teamId}/manager/${memberId}`, null, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.userName + " 님을 추방하였습니다.");
       getManage();
     } catch (error) {
@@ -74,7 +90,12 @@ const Manager = () => {
     }
 
     try {
-      const response = await axios.post(`/api/members/${teamId}/application/${applyId}`);
+      const response = await axios.post(`/api/members/${teamId}/application/${applyId}`, null, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.userName + " 님을 가입 승인하였습니다.");
       getManage();
     } catch (error) {
@@ -89,7 +110,12 @@ const Manager = () => {
     }
 
     try {
-      const response = await axios.delete(`/api/members/${teamId}/application/${applyId}`);
+      const response = await axios.delete(`/api/members/${teamId}/application/${applyId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.userName + " 님이 가입 거절되었습니다.");
       getManage();
     } catch (error) {
@@ -104,7 +130,12 @@ const Manager = () => {
     }
 
     try {
-      const response = await axios.delete(`/api/members/${teamId}/manager/${rejectId}`);
+      const response = await axios.delete(`/api/members/${teamId}/manager/${rejectId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       alert(response.data.data.userName + " 님의 밴이 해제되었습니다.");
       getManage();
     } catch (error) {
@@ -114,10 +145,7 @@ const Manager = () => {
 
   const errorResponse = (error) => {
 
-    if (error.response.data.httpStatus === 401) {
-      alert(error.response.data.message);
-      navigate('/user/login', { replace: true });
-    } else if (error.response.data.httpStatus === 403 || error.response.data.httpStatus === 409
+    if (error.response.data.httpStatus === 403 || error.response.data.httpStatus === 409
       || error.response.data.httpStatus === 404 || error.response.data.httpStatus === 400) {
       alert(error.response.data.message);
     } else {
@@ -161,7 +189,7 @@ const Manager = () => {
             <Col lg={6} key={member.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${member.id}`}>
+                <Link to={`/user/${member.id}`}>
                   <span style={{ width: '40%' }}>{member.nickname}</span>
                   <span>{member.age}</span>
                   <span>{member.gender}</span>
@@ -209,7 +237,7 @@ const Manager = () => {
             <Col lg={6} key={apply.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${apply.id}`}>
+                <Link to={`/user/${apply.id}`}>
                   <span style={{ width: '40%' }}>{apply.nickname}</span>
                   <span>{apply.age}</span>
                   <span>{apply.gender}</span>
@@ -254,7 +282,7 @@ const Manager = () => {
             <Col lg={6} key={reject.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/users/${reject.id}`}>
+                <Link to={`/user/${reject.id}`}>
                   <span style={{ width: '40%' }}>{reject.nickname}</span>
                   <span>{reject.age}</span>
                   <span>{reject.gender}</span>

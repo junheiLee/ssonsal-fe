@@ -37,7 +37,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSignUp}>
+    <form style={{marginTop:"50px"}} onSubmit={handleSignUp}>
       <label>Email:
         <input type="email" name="email" value={formData.email} onChange={handleChange} required />
       </label>
@@ -83,6 +83,7 @@ const SignUpForm = () => {
         <input type="text" name="preferredArea" value={formData.preferredArea} onChange={handleChange} required />
       </label>
       <br />
+      
       <button type="submit">가입하기</button>
     </form>
   );
