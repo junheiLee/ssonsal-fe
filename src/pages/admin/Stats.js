@@ -21,6 +21,14 @@ const Stats = () => {
   const [confirmedGameStatsData, setConfirmedGameStatsData] = useState([]);
   const [cancelledGameStatsData, setCancelledGameStatsData] = useState([]);
 
+
+  useEffect(() => {
+
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString();
+    fetchData(formattedCurrentDate);
+  }, []);
+
   const formatISODate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -32,11 +40,13 @@ const Stats = () => {
 
   const fetchData = async (selectedDate) => {
     try {
-      const response = await axios.post('/api/management/stats/changeMonth', { selectedDate,
-        headers: {
-          "Content-Type": "application/json",
-          ssonToken: getCookie("token")
-        }, });
+      const response = await axios.post('/api/management/stats/changeMonth',  {selectedDate},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            ssonToken: getCookie("token")
+          },
+        });
       if (response.status === 200) {
         const { monthStats, monthlyDailyStats } = response.data.data;
         console.log('Confirmed Game Stats Data:', confirmedGameStatsData);
@@ -95,12 +105,7 @@ const Stats = () => {
     }
   };
 
-  useEffect(() => {
 
-    const currentDate = new Date();
-    const formattedCurrentDate = currentDate.toISOString();
-    fetchData(formattedCurrentDate);
-  }, []);
 
   const updateDate = async (e) => {
     const month = e.target.value;

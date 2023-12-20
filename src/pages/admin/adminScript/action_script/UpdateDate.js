@@ -11,7 +11,7 @@ const SelectMonth = ({ setSelectedMonth, setStatsData, setMonthlyDailyStats }) =
       console.log("선택한 달:", month);
       console.log("포맷된 날짜:", formattedDate);
   
-      const response = await axios.post('/api/management/stats/changeMonth', { selectedDate: formattedDate },
+      const response = await axios.post('/api/management/stats/changeMonth', {formattedDate} ,
       {
         headers: {
           "Content-Type": "application/json",

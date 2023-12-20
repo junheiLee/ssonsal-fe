@@ -19,7 +19,7 @@ const User = () => {
 
   useEffect(() => {
     fetchData();
-  }, );
+  }, []);
 
 
   const fetchData = async () => {
@@ -88,7 +88,7 @@ const User = () => {
                 <div className="card">
                   <div className="card-header">
                     <strong className="card-title">유저 관리</strong>
-                    <EmailPublishButton selectedUserIds={selectedUserIds} />
+                    <EmailPublishButton  />
                   </div>
                   <div className="card-body">
                     <table id="bootstrap-data-table" className="table table-striped table-bordered">

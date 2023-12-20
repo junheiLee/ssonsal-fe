@@ -21,22 +21,23 @@ const EmailPublishButton = () => {
  
   const handlePublishEmail = async () => {
     try {
-      const response = await axios.post('/api/management/publishEmail', 
-       emailContent
-      , {
+      const response = await axios.post('/api/publishEmail', 
+       {emailContent}
+      ,  {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ssonToken: getCookie("token")
-        }
+        },
       });
     
       const { data } = response;
-      const userId = data.data.userId; 
+
     
-      console.log('이메일 발송 성공, userId:', userId);
+      console.log('이메일 발송 성공');
+      alert("메시지 전송 성공");
     } catch (err) {
-      const errorMessage = err.response?.data?.message || '이메일 발송 에러';
-      setError(errorMessage);
+      // const errorMessage = err.response?.data?.message || '이메일 발송 에러';
+      // setError(errorMessage);
       console.error('이메일 발송 에러', err);
     } finally {
       setLoading(false);
