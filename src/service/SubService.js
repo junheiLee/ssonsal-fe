@@ -20,9 +20,9 @@ export const SubService = (matchApplicationId) => {
             });
     }
     // 용병 신청하기
-    const getSubApply = async (matchApplicationId,logInInUser) => {
+    const getSubApply = async (matchApplicationId) => {
         try {
-            const response = await axios.post(`/match-applications/${matchApplicationId}/sub-applicants`, logInInUser);
+            const response = await axios.post(`/match-applications/${matchApplicationId}/sub-applicants`);
             subListLoad();
             setSubApplicants(response.data.data.subApplicants);
         } catch (error) {
@@ -46,7 +46,8 @@ export const SubService = (matchApplicationId) => {
         }
     };
     // 용병 거절하기
-    const getSubReject = async (matchApplicationId, subApplicantId) => {
+
+   const getSubReject = async (matchApplicationId, subApplicantId) => {
         try {
             
             const response = await axios.delete(`/match-applications/${matchApplicationId}/sub-applicants/${subApplicantId}`)

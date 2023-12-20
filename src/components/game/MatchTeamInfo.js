@@ -1,12 +1,11 @@
-import { Container, Row, Col, Image, Badge, Accordion, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Image, Badge, Accordion, ListGroup, Button } from "react-bootstrap";
 import "../../styles/game/component/MatchTeamInfo.css";
 import "../../styles/game/component/GameListElement.css";
 
 import SubListElement from "./SubListElement";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getMatchTeamInfo } from "../../services/game/MatchTeamService";
-import { getSubs, getSubApplicants } from "../../services/game/SubService";
+import { getSubs, getSubApplicants, getSubApply } from "../../services/game/SubService";
 
 const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
 
@@ -58,16 +57,16 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
     let [subApplicants, setSubApplicants] = useState([]);
 
     let [activeKey, setActiveKey] = useState([]);
-    // if(teamInfo.havingSubCount > 0) {
-    //     let copy = [...activeKey];
-    //     copy.push('0');
-    //     setActiveKey(copy);
-    // }
-    // if(subApplicants.length > 0) {
-    //     let copy = [...activeKey];
-    //     copy.push('1');
-    //     setActiveKey(copy);
-    // }
+
+    const subApply = async (event) => {
+        event.stopPropagation();
+        try {
+            setSubApplicants(await getSubApply(matchTeamId));
+                
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div style={{ marginTop: "20px", minWidth: "300px" }}>
@@ -122,26 +121,22 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                             } */}
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
-                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + ")"}</Accordion.Header>
-                            {
-                                subs.length !== 0
-                                    ?
-                                    <>
+                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + ")"} <Button className="subApplyBtn" onClick={(event) => {subApply(event);}} size="sm" variant="success" >신청</Button></Accordion.Header>
+
                                         <Accordion.Body>
                                             <ListGroup>
                                                 {
                                                     subApplicants.length != 0
                                                         ?
                                                         subApplicants.map(sub => (
-                                                            <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} />
+                                                            <SubListElement status={"waiting"} permmision={teamInfo.teamId == sub.teamId} sub={sub} />
                                                         ))
                                                         : null
                                                 }
                                             </ListGroup>
                                         </Accordion.Body>
-                                    </>
-                                    : null
-                            }
+
+  
                         </Accordion.Item>
                     </Accordion>
                 </div>

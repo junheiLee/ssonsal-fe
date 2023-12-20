@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { ListGroup, Badge, Container, Row, Col, Button } from 'react-bootstrap';
+import { ListGroup, Container, Row, Col, Button } from 'react-bootstrap';
 
 function SubListElement({ status, permmision, sub }) {
-
+    console.log(permmision);
     return (
 
         <ListGroup.Item >
@@ -16,10 +15,9 @@ function SubListElement({ status, permmision, sub }) {
                         &&
                         <Col md="auto">
                             <Button size="sm" variant="success"
-                            //onClick={ () => } - sub.applicantId 이걸로 승인
-                            >
+                           onClick={() => {}}  >
                                 승인</Button>{' '}
-                            <Button size="sm" variant="success">거절</Button>{' '}
+                            <Button size="sm" variant="success" onClick={() => {}}>거절</Button>{' '}
                         </Col>
                     }
                 </Row>
