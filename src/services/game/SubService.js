@@ -46,9 +46,7 @@ export const getSubApplicants = async (matchApplicationId) => {
     } catch (error) {
         console.error("subApplicants 오류: ", error);
         return [];
-    }
-}
-<<<<<<< HEAD
+    }}
 
 
 export const closeSubRecruitment = async (matchApplicationId) => {
@@ -71,22 +69,61 @@ export const closeSubRecruitment = async (matchApplicationId) => {
         throw error;
     }
 }
-=======
+
 // 용병 신청하기
 export const getSubApply = async (matchApplicationId) => {
     try {
-        const response = await axios.post(`/api/match-applications/${matchApplicationId}/sub-applicants`, null, {
+        const response = await axios.post(`/match-applications/${matchApplicationId}/sub-applicants`, null, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
             },
         });
+
         return await getSubApplicants(matchApplicationId);
 
     } catch (error) {
+        alert(error.response.data.message);
         console.error('API 요청 중 오류 발생', error);
         throw error;
     }
 };
 
->>>>>>> 90858a941eaba3cbe9f910edac80a5294cf50aa0
+export const rejectSub = async (matchApplicationId, subApplicantId) => {
+    try {
+        const response = await axios.delete(`/match-applications/${matchApplicationId}/sub-applicants/${subApplicantId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
+            }
+        });
+
+        if (response.data.code === "SUCCESS") {
+            return response.data.data.rejectedSubUserId;
+        }
+
+    } catch (error) {
+        console.error("rejectSub 오류: ", error);
+        alert(error.response.data.message);
+        throw error;
+    }
+}
+
+export const acceptSub = async (matchApplicationId, values) => {
+    try {
+        const response = await axios.post(`/match-teams/${matchApplicationId}/subs`, values, {
+            headers: {
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
+            }
+        });
+
+        if (response.data.code === "SUCCESS") {
+            return response.data.data.createdSubId;
+        } 
+    }catch (error) {
+        console.error("acceptSub 오류: ", error);
+        alert(error.response.data.message);
+        throw error;
+    }
+} 

@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { acceptAwayTeam, rejectTeam } from '../../services/game/MatchTeamService';
-import { getSubs, getSubApplicants, closeSubRecruitment } from '../../services/game/SubService';
+import { getSubs, getSubApplicants, closeSubRecruitment, getSubApply } from '../../services/game/SubService';
+import SubListElement from "./SubListElement";
 
 
 
@@ -77,6 +78,15 @@ function MatchApplicationListElement({ matchApplication, homeId }) {
   let [subs, setSubs] = useState([]);
   let [subApplicants, setSubApplicants] = useState([]);
 
+  const fetchApplySub = async (event) => {
+    event.stopPropagation();
+    try {
+      setSubApplicants(await getSubApply(matchApplication.id));
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -97,7 +107,7 @@ function MatchApplicationListElement({ matchApplication, homeId }) {
                   </Badge>
 
                   <Badge bg="secondary"
-                    onClick={(e) => fetchRejectTeam(e)}
+                    onClick={(e) => fetchApplySub(e)}
                   >
                     거절
                   </Badge>
@@ -114,39 +124,64 @@ function MatchApplicationListElement({ matchApplication, homeId }) {
                 <Accordion.Item style={{ marginTop: "2px" }} eventKey="0">
 
                   <Accordion.Header > <span style={{ fontSize: "12px" }}>{
-                    "용병 목록 (" + "/" + (matchApplication.subCount) + ")"}
-                    {/* //status={"approval"} */}
+                    "용병 목록 (" + (subs.length) + ")"}
                   </span></Accordion.Header>
-                  <Accordion.Body>
-                    <ListGroup>
-                      {/* //matchApplication.teamId */}
-                    </ListGroup>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-
-                  <Accordion.Header  ><span style={{ fontSize: "12px" }}>{
-                    "용병 신청 목록 (" + (matchApplication.subCount) + ")"}
-                    {currentUserTeamId == matchApplication.teamId
+                  {
+                    subs.length !== 0
                       ?
-                      <Badge style={{ textAlign: "right" }}
-                        onClick={(e) => { fetchClose(e) }}>마감</Badge>
-                      :
-                      currentUserTeamId != homeId && <Badge style={{ textAlign: "right" }}>신청</Badge>
-                    }
-                    {/* permmision={teamInfo.teamId == "로그인 팀 유저"} */}
-                  </span></Accordion.Header>
-                  <Accordion.Body>
-                    <ListGroup>
+                      <>
+                        <Accordion.Body>
+                          <ListGroup>
 
-                    </ListGroup>
-                  </Accordion.Body>
+                            {
+                              subs.map((sub, i) => (
+                                <SubListElement status={"approval"} sub={sub} matchTeamId={matchApplication.id} key={i} />
+                              ))
+                            }
+                          </ListGroup>
+                        </Accordion.Body>
+                      </>
+                      : null
+                  }
                 </Accordion.Item>
+                {
+                  matchApplication.subCount == 0
+                    ? null
+                    : <>
+                      <Accordion.Item eventKey="1">
+
+                        <Accordion.Header  ><span style={{ fontSize: "12px" }}>{
+                          "용병 신청 목록 (" + (subApplicants.length) + ")"}
+                          {currentUserTeamId == matchApplication.teamId
+                            ?
+                            <Badge style={{ textAlign: "right" }}
+                              onClick={(e) => { fetchClose(e) }}>마감</Badge>
+                            :
+                            currentUserTeamId != matchApplication.homeId && <Badge style={{ textAlign: "right" }}
+                              onClick={(e) => { fetchApplySub(e) }}>신청</Badge>
+                          }
+                        </span></Accordion.Header>
+                        <Accordion.Body>
+                          <ListGroup>
+                            {
+                              subApplicants.length != 0
+                                ?
+                                subApplicants.map((sub, i) => (
+                                  <SubListElement status={"waiting"} permmision={matchApplication.teamId == currentUserTeamId} sub={sub} matchTeamId={matchApplication.id} key={i} />
+
+                                ))
+                                : null
+                            }
+                          </ListGroup>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </>
+                }
               </div>
           }
         </Accordion>
 
-      </ListGroup.Item>
+      </ListGroup.Item >
 
     </>
   );
