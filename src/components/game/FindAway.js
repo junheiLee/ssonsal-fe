@@ -4,28 +4,29 @@ import MatchTeamInfoForm from './MatchTeamInfoForm';
 import { applyToGameAsAway, readMatchApplications } from '../../services/game/MatchTeamService';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import MatchApplicationListElement from './MatchApplicationListElement';
 
 
 function FindAway({ gameId }) {
   const [open, setOpen] = useState(false);
   const teamId = useSelector(state => state.loginUser.teamId);
   const navigate = useNavigate();
-  const {option} = useParams();
+  const { option } = useParams();
   let [currentApplications, setCurrentApplications] = useState([]);
 
   useEffect(() => {
     featchApplication();
-  }, [])
+  }, [currentApplications.length])
 
   const featchApplication = async () => {
     try {
-        setCurrentApplications(readMatchApplications(gameId));
-
+      setCurrentApplications(readMatchApplications(gameId));
+      console.log("배열은 날 힘들게 해",currentApplications);
     } catch (error) {
     }
     console.log("durlsrk");
 
-}
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -84,23 +85,26 @@ function FindAway({ gameId }) {
         <Accordion className="accordion" defaultActiveKey={['0']}>
           <Accordion.Item eventKey="0">
             <Accordion.Header >신청 팀 목록</Accordion.Header>
-            <Accordion.Body>
-              <ListGroup>
-                {/* {
-                subs.length !== 0
-                  ?
-                  subs.map(sub => (
-                    <SubListElement status={"approval"} sub={sub} key={subs.userId} />
-                  ))
-                  : null
-              } */}
-
-              </ListGroup>
-            </Accordion.Body>
+            {
+              currentApplications.length !== 0
+                ?
+                <>
+                  <Accordion.Body>
+                    <ListGroup>
+                      {
+                        currentApplications.map(application => (
+                          <MatchApplicationListElement status={"approval"} matchApplication={application} key={application.teamId} />
+                        ))
+                      }
+                    </ListGroup>
+                  </Accordion.Body>
+                </>
+                : null
+            }
           </Accordion.Item>
         </Accordion>
       </div>
-    </div>
+    </div >
   );
 }
 

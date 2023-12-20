@@ -27,7 +27,7 @@ const GameDetail = (id) => {
 
     const fetchGame = async () => {
         try {
-            setGameInfo(await getGame(  ));
+            setGameInfo(await getGame(gameId));
         } catch (error) {
             console.log(error);
         }

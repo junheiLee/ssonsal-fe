@@ -10,9 +10,11 @@ export const getSubs = async (matchApplicationId) => {
                 ssonToken: getCookie("token")
             },
         });
+        console.log("subService, getSubs url=", `/match-teams/${matchApplicationId}/subs`);
 
         if(response.data.code === "SUCCESS") {
             let subs = response.data.data.subs;
+            console.log(subs);
             return subs || [];
         } else {
             console.log(response.data.message);

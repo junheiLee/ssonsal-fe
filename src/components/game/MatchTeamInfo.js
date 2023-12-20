@@ -101,35 +101,47 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                     <Accordion className="accordion" defaultActiveKey={activeKey} alwaysOpen>
                         <Accordion.Item eventKey="0">
                             <Accordion.Header >{"용병 목록 (" + teamInfo.havingSubCount + "/" + (teamInfo.subCount + teamInfo.havingSubCount) + ")"}</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup>
-                                    {
-                                        subs.length !== 0
-                                            ?
-                                            subs.map(sub => (
-                                                <SubListElement status={"approval"} sub={sub} key={subs.userId} />
-                                            ))
-                                            : null
-                                    }
-
-                                </ListGroup>
-                            </Accordion.Body>
+                            {/* {
+                                subs.length !== 0
+                                    ?
+                                    <> */}
+                                        <Accordion.Body>
+                                            <ListGroup>
+                                                {
+                                                    subs.length !== 0
+                                                    ?
+                                                    subs.map(sub => (
+                                                        <SubListElement status={"approval"} sub={sub} key={subs.userId} />
+                                                    ))
+                                                    : null
+                                                }
+                                            </ListGroup>
+                                        </Accordion.Body>
+                                    {/* </>
+                                    : null
+                            } */}
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
                             <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + ")"}</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup>
-                                    {
-                                        subApplicants.length != 0
-                                            ?
-                                            subApplicants.map(sub => (
-                                                <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} />
-                                            ))
-                                            : null
-                                    }
-
-                                </ ListGroup>
-                            </Accordion.Body>
+                            {
+                                subs.length !== 0
+                                    ?
+                                    <>
+                                        <Accordion.Body>
+                                            <ListGroup>
+                                                {
+                                                    subApplicants.length != 0
+                                                        ?
+                                                        subApplicants.map(sub => (
+                                                            <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} />
+                                                        ))
+                                                        : null
+                                                }
+                                            </ListGroup>
+                                        </Accordion.Body>
+                                    </>
+                                    : null
+                            }
                         </Accordion.Item>
                     </Accordion>
                 </div>
@@ -137,7 +149,7 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
             <div className="match-info">
 
             </div>
-        </div>
+        </div >
     );
 
 }
