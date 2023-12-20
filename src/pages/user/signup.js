@@ -80,7 +80,7 @@ const SignUpForm = () => {
       console.log(response.data);
       navigate("/user/sign-in");
     } catch (error) {
-      console.error("가입 중 오류 발생:", error);
+      console.error(error);
     }
   };
 

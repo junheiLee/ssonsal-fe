@@ -36,7 +36,7 @@ const UserComponent = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("/user/profile/" + userId, {
+      const response = await axios.get("/api/user/profile/" + userId, {
         headers: {
           ssonToken: token,
         },
@@ -231,7 +231,7 @@ const UserComponent = () => {
           </Col>
         </Row>
         <div>
-    {userData.role === 0 ? <Email /> : userData.role === 2 ? <EmailCancle /> : null}
+   <Email />  <EmailCancle /> 
        </div>
       </Container>
     </div>

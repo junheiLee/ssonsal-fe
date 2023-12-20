@@ -19,8 +19,7 @@ const EmailSubscriptionButton = () => {
       // 이메일 인증 확인중으로 상태 업데이트
       setConfirming(true);
 
-      const response = await axios.post('/api/memberSubscribe',
-      {
+      const response = await axios.post('/api/memberSubscribe',null,{
         headers: {
           "Content-Type": "application/json",
           ssonToken: getCookie("token")
@@ -42,7 +41,12 @@ const EmailSubscriptionButton = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post('/api/confirm-subscription');
+      const response = await axios.post('/api/confirm-subscription',null,{
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
 
       if (response.data.data === '이메일 불일치') {
         console.log('이메일 불일치');

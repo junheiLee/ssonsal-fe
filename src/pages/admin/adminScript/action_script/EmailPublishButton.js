@@ -21,9 +21,9 @@ const EmailPublishButton = () => {
  
   const handlePublishEmail = async () => {
     try {
-      const response = await axios.post('/api/management/publishEmail', {
-        emailText: emailContent
-      }, {
+      const response = await axios.post('/api/management/publishEmail', 
+       emailContent
+      , {
         headers: {
           'Content-Type': 'application/json',
           ssonToken: getCookie("token")
