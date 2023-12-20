@@ -4,9 +4,12 @@ import "../../styles/team/index.css";
 import "../../styles/team/Create.css";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../services/UserService";
+import { setTeamId } from "../../store/LoginUser";
+import { useDispatch } from 'react-redux';
 
 const TeamForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const setThumbnail = (event) => {
     const logoInput = document.getElementById("input-file");
@@ -60,7 +63,9 @@ const TeamForm = () => {
         },
       });
       alert(response.data.data.teamName + "팀 생성 완료!");
+      dispatch(setTeamId(response.data.data));
       navigate("/teams/" + response.data.data.teamId, { replace: true });
+
     } catch (error) {
       if (error.response.status === 400) {
         alert(error.response.data.message);
