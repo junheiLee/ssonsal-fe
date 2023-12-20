@@ -16,8 +16,7 @@ const GameDetail = (id) => {
     let [gameInfo, setGameInfo] = useState({
         homeApplicationId: null,
         awayApplicationId: null,
-        matchStatus: -1,
-
+        matchStatus: -1
     });
 
 
@@ -110,7 +109,7 @@ const GameDetail = (id) => {
                             </Col>
                             <Col xs={1} md="auto"> {gameInfo.findAway && <h1>VS</h1>} </Col> {/*난중에 사진넣거나 해도 조흘듯*/}
                             <Col>
-                                {gameInfo.matchStatus == 0 && <FindAway gameId={gameId}/>}
+                                {gameInfo.matchStatus == 0 && <FindAway gameId={gameId} homeId={gameInfo.homeId}/>}
                                 {gameInfo.matchStatus == 1 && gameInfo.awayApplicationId == null && null}
                                 {gameInfo.awayApplicationId != null && <MatchTeamInfo matchTeamId={gameInfo.awayApplicationId} matchStatus={gameInfo.matchStatus} />}
                             </Col>

@@ -30,3 +30,8 @@
     --bs-accordion-active-color: var(--bs-success-text-emphasis);
     --bs-accordion-active-bg: #b2e0b0;
 }
+
+.subApplyBtn{
+    position: absolute; 
+    right: 55px;
+}
