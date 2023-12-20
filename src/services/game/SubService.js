@@ -49,3 +49,25 @@ export const getSubApplicants = async (matchApplicationId) => {
         return [];
     }
 }
+
+
+export const closeSubRecruitment = async (matchApplicationId) => {
+    try {
+        const response = await axios.delete(`/match-applications/${matchApplicationId}/sub-applicants`, {
+            headers: {
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
+            }
+        });
+
+        if (response.data.code === "SUCCESS") {
+            return response.data.data.matchApplicantId;
+        } else {
+            console.log("CODE: ", response.data.code);
+        }
+    } catch (error) {
+        console.error("applyToGameAsAway 오류: ", error);
+        alert(error.response.data.message);
+        throw error;
+    }
+}

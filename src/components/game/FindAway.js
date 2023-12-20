@@ -92,7 +92,7 @@ function FindAway({ gameId, homeId }) {
                   currentApplications.length !== 0
                     ?
                     currentApplications.map(application => (
-                      <MatchApplicationListElement matchApplication={application} key={application.teamId} gameId={gameId} homeId={homeId} />
+                      <MatchApplicationListElement matchApplication={application} key={application.teamId} homeId={homeId} />
                     ))
                     : null
                 }

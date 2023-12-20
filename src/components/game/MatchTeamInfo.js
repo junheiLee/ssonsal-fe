@@ -122,7 +122,7 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                             }
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
-                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + "/" + teamInfo.subCount + ")"}</Accordion.Header>
+                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + "/" + teamInfo.subCount + ")"} </Accordion.Header>
                             {
                                 subs.length !== 0
                                     ?
