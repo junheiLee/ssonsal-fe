@@ -10,16 +10,18 @@ export const getSubs = async (matchApplicationId) => {
                 ssonToken: getCookie("token")
             },
         });
+        console.log("subService, getSubs url=", `/match-teams/${matchApplicationId}/subs`);
 
         if(response.data.code === "SUCCESS") {
             let subs = response.data.data.subs;
+            console.log(subs);
             return subs || [];
         } else {
             console.log(response.data.message);
             return [];
         }
     } catch (error) {
-        console.error("getGames 오류: ", error);
+        console.error("getSubs 오류: ", error);
         return [];
     }
 }
