@@ -108,7 +108,7 @@ const TeamEdit = () => {
 
 
     return (
-        <Container className="mt-5">
+        <Container className="mt-5 mb-5">
             <h1 className='formexplan'>프로필</h1>
 
             <Container className="text-center mt-5">
