@@ -12,9 +12,8 @@ export const getSubs = async (matchApplicationId) => {
         });
         console.log("subService, getSubs url=", `/match-teams/${matchApplicationId}/subs`);
 
-        if(response.data.code === "SUCCESS") {
+        if (response.data.code === "SUCCESS") {
             let subs = response.data.data.subs;
-            console.log(subs);
             return subs || [];
         } else {
             console.log(response.data.message);
@@ -37,7 +36,7 @@ export const getSubApplicants = async (matchApplicationId) => {
             },
         });
 
-        if(response.data.code === "SUCCESS") {
+        if (response.data.code === "SUCCESS") {
             let subApplicants = response.data.data.subApplicants;
             return subApplicants || [];
         } else {
@@ -49,3 +48,20 @@ export const getSubApplicants = async (matchApplicationId) => {
         return [];
     }
 }
+// 용병 신청하기
+export const getSubApply = async (matchApplicationId) => {
+    try {
+        const response = await axios.post(`/api/match-applications/${matchApplicationId}/sub-applicants`, null, {
+            headers: {
+                "Content-Type": "application/json",
+                ssonToken: getCookie("token")
+            },
+        });
+        return await getSubApplicants(matchApplicationId);
+
+    } catch (error) {
+        console.error('API 요청 중 오류 발생', error);
+        throw error;
+    }
+};
+
