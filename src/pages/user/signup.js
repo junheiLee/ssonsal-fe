@@ -81,6 +81,7 @@ const SignUpForm = () => {
       navigate("/user/sign-in");
     } catch (error) {
       console.error("가입 중 오류 발생:", error);
+      alert(error.response.data.message);
     }
   };
 
@@ -88,7 +89,7 @@ const SignUpForm = () => {
     <div className="form-container">
       <form
         style={{ marginTop: "50px" }}
-        className="form"
+        className="form signform"
         onSubmit={handleSubmit(handleSignUp)}
       >
         <p className="title">Register </p>
@@ -225,18 +226,16 @@ const SignUpForm = () => {
           {errors.preferredTime && <p>{errors.preferredTime.message}</p>}
         </label>
         <br />
-        <div className="container">
-          <label>
-            선호지역
-            <select {...register("preferredArea", { required: true })}>
-              <option value="상관없음">상관없음</option>
-              <option value="서울">서울</option>
-              <option value="경기">경기</option>
-              <option value="지방">지방</option>
-            </select>
-            {errors.preferredArea && <p>{errors.preferredArea.message}</p>}
-          </label>
-        </div>
+        <label>
+          선호지역
+          <select {...register("preferredArea", { required: true })}>
+            <option value="상관없음">상관없음</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="지방">지방</option>
+          </select>
+          {errors.preferredArea && <p>{errors.preferredArea.message}</p>}
+        </label>
         <br />
         <button type="submit" className="submit">
           가입하기
