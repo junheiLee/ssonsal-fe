@@ -98,7 +98,7 @@ const TeamForm = () => {
             <Col lg={4} className="mb-5">
               <div id="image_container"></div>
               <Form.Label
-                className="input-file-button mt-2 logobtn"
+                className="input-file-button mt-2" id="logobtn" 
                 htmlFor="input-file"
               >
                 로고 등록
