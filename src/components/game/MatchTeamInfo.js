@@ -100,29 +100,29 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                 <div style={{ marginTop: "20px" }}>
                     <Accordion className="accordion" defaultActiveKey={activeKey} alwaysOpen>
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header >{"용병 목록 (" + teamInfo.havingSubCount + "/" + (teamInfo.subCount + teamInfo.havingSubCount) + ")"}</Accordion.Header>
-                            {/* {
+                            <Accordion.Header >{"용병 목록 (" + teamInfo.havingSubCount + ")"}</Accordion.Header>
+                            {
                                 subs.length !== 0
                                     ?
-                                    <> */}
+                                    <>
                                         <Accordion.Body>
                                             <ListGroup>
                                                 {
-                                                    subs.length !== 0
-                                                    ?
+                                                    // subs.length !== 0
+                                                    // ?
                                                     subs.map(sub => (
                                                         <SubListElement status={"approval"} sub={sub} key={subs.userId} />
                                                     ))
-                                                    : null
+                                                    // : null
                                                 }
                                             </ListGroup>
                                         </Accordion.Body>
-                                    {/* </>
+                                    </>
                                     : null
-                            } */}
+                            }
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
-                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + ")"}</Accordion.Header>
+                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + "/" + teamInfo.subCount + ")"}</Accordion.Header>
                             {
                                 subs.length !== 0
                                     ?
@@ -133,7 +133,7 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                                                     subApplicants.length != 0
                                                         ?
                                                         subApplicants.map(sub => (
-                                                            <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} />
+                                                            <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} key={sub.userId} />
                                                         ))
                                                         : null
                                                 }
