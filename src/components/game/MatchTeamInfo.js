@@ -98,7 +98,7 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
                             </Col>
                             <Col>
                                 <div style={{ marginTop: "20%", marginLeft: "10%", textAlign: "left" }}>
-                                    <h4>{teamInfo.name}</h4>
+                                    <h3>{teamInfo.name}</h3>
                                     <div style={{ marginTop: "20%" }}>
                                         <Badge style={{ margin: "1px" }} bg="secondary">점수</Badge>
                                         <span>

@@ -4,11 +4,15 @@ import { Button, ListGroup } from 'react-bootstrap';
 import GameListElement from "../../components/game/GameListElement";
 import "../../styles/game/GameList.css"
 import { getGames } from '../../services/game/GameService';
+import { useSelector } from 'react-redux';
+
 
 const GameList = () => {
 
     let { option } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
+    const currentUserTeamId = useSelector(state => state.loginUser.teamId);
+
 
     useEffect(() => {
         fetchGames();
@@ -59,7 +63,7 @@ const GameList = () => {
                     </Button>{' '}
                 </div>
                 <div className="right-button-box" style={{ width: "40%", display: "inline-block", marginTop: "10px", marginBottom: "20px", textAlign: "right" }}>
-                    {hasTeam
+                    {currentUserTeamId != 0
                         && <Button variant="success"
                             onClick={() => { navigate("/games/new") }}> New</Button>}
                 </div>
