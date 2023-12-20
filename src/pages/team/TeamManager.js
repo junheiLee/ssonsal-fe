@@ -189,7 +189,7 @@ const Manager = () => {
             <Col lg={6} key={member.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/user/${member.id}`}>
+                <Link to={`/user/profile/${member.id}`}>
                   <span style={{ width: '40%' }}>{member.nickname}</span>
                   <span>{member.age}</span>
                   <span>{member.gender}</span>
@@ -237,7 +237,7 @@ const Manager = () => {
             <Col lg={6} key={apply.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/user/${apply.id}`}>
+                <Link to={`/user/profile/${apply.id}`}>
                   <span style={{ width: '40%' }}>{apply.nickname}</span>
                   <span>{apply.age}</span>
                   <span>{apply.gender}</span>
@@ -282,7 +282,7 @@ const Manager = () => {
             <Col lg={6} key={reject.id}>
               <div className="members">
                 <p>{index + 1}</p>
-                <Link to={`/user/${reject.id}`}>
+                <Link to={`/user/profile/${reject.id}`}>
                   <span style={{ width: '40%' }}>{reject.nickname}</span>
                   <span>{reject.age}</span>
                   <span>{reject.gender}</span>

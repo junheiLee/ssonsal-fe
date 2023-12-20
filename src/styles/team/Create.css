@@ -8,6 +8,7 @@ h1{
     text-align: left;
 }
 #logobtn{
+    width:100px;
     padding:5px 15px;
     color:#fff;
     background-color: #2A8757;
@@ -16,6 +17,7 @@ h1{
 }
 
 .logobtn{
+    width:100px;
     padding:5px 15px;
     color:#fff;
     background-color: #2A8757;
@@ -97,6 +99,7 @@ height: 100%;
 }
 
 #submitbtn{
+    width:150px;
     background-color: #2A8757;
     border: none;
     padding:10px;

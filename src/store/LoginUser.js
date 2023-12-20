@@ -18,10 +18,13 @@ const loginUser = createSlice({
     deleteTeam(loginUser) {
       loginUser.teamId = 0;
     },
+    setTeamId(loginUser, data) {
+      loginUser.teamId = data.payload.teamId;
+    }
   }
 });
 
-export const { logIn, logOut, deleteTeam } = loginUser.actions;
+export const { logIn, logOut, deleteTeam, setTeamId } = loginUser.actions;
 
 
 export default loginUser;
