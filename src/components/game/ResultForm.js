@@ -26,7 +26,8 @@ const ResultForm = ({ gameId, target }) => {
             let response = await enterResult(gameId, values);
             
             if(response.code == "SUCCESS"){
-                navigate(`/games/${option}/${gameId}`);
+                alert(response.message);
+                window.location.reload();
             } else if(response.code == "WAIT_FOR_ANOTHER_TEAM") {
                 alert(response.message);
                 return;

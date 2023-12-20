@@ -62,7 +62,7 @@ export const createGame = async (createdGame) => {
             console.log(response.data.code);
         }
     } catch (error) {
-        console.error("createGame 오류: ", error);
+        alert(error.response.data.message);
         throw error;
     }
 }
@@ -81,7 +81,6 @@ export const enterResult = async (gameId, values) => {
         return response.data;
         
     } catch (error) {
-        console.error("insertResult 오류: ", error);
         alert(error.response.data.message);
         throw error;
     }

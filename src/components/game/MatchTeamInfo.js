@@ -1,14 +1,16 @@
-import { Container, Row, Col, Image, Badge, Accordion, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Image, Badge, Accordion, ListGroup, Button } from "react-bootstrap";
 import "../../styles/game/component/MatchTeamInfo.css";
 import "../../styles/game/component/GameListElement.css";
 
 import SubListElement from "./SubListElement";
-import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 import { getMatchTeamInfo } from "../../services/game/MatchTeamService";
-import { getSubs, getSubApplicants } from "../../services/game/SubService";
+import { getSubs, getSubApplicants, getSubApply, closeSubRecruitment } from "../../services/game/SubService";
 
 const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
+
+    const currentUserTeamId = useSelector(state => state.loginUser.teamId);
 
     let [teamInfo, setTeamInfo] = useState({
         teamId: -1,
@@ -49,6 +51,8 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
         fetchMatchTeamInfo();
         fetchSubs();
         fetchSubApplicants();
+        console.log("currentUserTeamId, teamInfo.teamId", currentUserTeamId, teamInfo.teamId);
+
         return () => {
 
         }
@@ -58,86 +62,130 @@ const MatchTeamInfo = ({ matchTeamId, matchStatus }) => {
     let [subApplicants, setSubApplicants] = useState([]);
 
     let [activeKey, setActiveKey] = useState([]);
-    // if(teamInfo.havingSubCount > 0) {
-    //     let copy = [...activeKey];
-    //     copy.push('0');
-    //     setActiveKey(copy);
-    // }
-    // if(subApplicants.length > 0) {
-    //     let copy = [...activeKey];
-    //     copy.push('1');
-    //     setActiveKey(copy);
-    // }
+
+    const subApply = async (event) => {
+        event.stopPropagation();
+        try {
+            setSubApplicants(await getSubApply(matchTeamId));
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const fetchClose = async (e) => {
+
+        try {
+            await closeSubRecruitment(matchTeamId);
+            alert("마감");
+            window.location.reload();
+        } catch (error) {
+            alert(error.response.data.message);
+        }
+    }
+
+
 
     return (
         <div style={{ marginTop: "20px", minWidth: "300px" }}>
-            <div className="team-info">
-                <Container>
-                    <Row>
-                        <Col>
-                            <Image src={teamInfo.logoUrl} roundedCircle fluid />
-                        </Col>
-                        <Col>
-                            <div style={{ marginTop: "20%", marginLeft: "10%", textAlign: "left" }}>
-                                <h4>{teamInfo.name}</h4>
-                                <div style={{ marginTop: "20%" }}>
-                                    <Badge style={{ margin: "1px" }} bg="secondary">점수</Badge>
-                                    <span>
-                                        {teamInfo.skillScore == -1
-                                            ? "  -"
-                                            : teamInfo.skillScore}
-                                    </span>
+            {teamInfo.teamId != -1 &&
+                <div className="team-info">
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Image src={teamInfo.logoUrl} roundedCircle fluid />
+                            </Col>
+                            <Col>
+                                <div style={{ marginTop: "20%", marginLeft: "10%", textAlign: "left" }}>
+                                    <h4>{teamInfo.name}</h4>
+                                    <div style={{ marginTop: "20%" }}>
+                                        <Badge style={{ margin: "1px" }} bg="secondary">점수</Badge>
+                                        <span>
+                                            {teamInfo.skillScore == -1
+                                                ? "  -"
+                                                : teamInfo.skillScore}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <Badge style={{ margin: "1px" }} bg="secondary">유니폼</Badge>
+                                        <span>{teamInfo.uniform}</span>
+                                    </div>
+
                                 </div>
-                                <div>
-                                    <Badge style={{ margin: "1px" }} bg="secondary">유니폼</Badge>
-                                    <span>{teamInfo.uniform}</span>
-                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                    <div style={{ marginTop: "20px" }}>
+                        <Accordion className="accordion" defaultActiveKey={activeKey} alwaysOpen>
+                            {
+                                teamInfo.havingSubCount == 0
+                                    ? null
+                                    : <>
+                                        <Accordion.Item eventKey="0">
 
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-                <div style={{ marginTop: "20px" }}>
-                    <Accordion className="accordion" defaultActiveKey={activeKey} alwaysOpen>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header >{"용병 목록 (" + teamInfo.havingSubCount + "/" + (teamInfo.subCount + teamInfo.havingSubCount) + ")"}</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup>
-                                    {
-                                        subs.length !== 0
-                                            ?
-                                            subs.map(sub => (
-                                                <SubListElement status={"approval"} sub={sub} key={subs.userId} />
-                                            ))
-                                            : null
-                                    }
+                                            <Accordion.Header >{"용병 목록 (" + teamInfo.havingSubCount + ")"}</Accordion.Header>
+                                            {
+                                                subs.length !== 0
+                                                    ?
+                                                    <>
+                                                        <Accordion.Body>
+                                                            <ListGroup>
+                                                                {
+                                                                    subs.map((sub, i) => (
+                                                                        <SubListElement status={"approval"} sub={sub} key={i} />
+                                                                    ))
+                                                                }
+                                                            </ListGroup>
+                                                        </Accordion.Body>
+                                                    </>
+                                                    : null
+                                            }
+                                        </Accordion.Item>
+                                    </>
+                            }
+                            {
+                                teamInfo.subCount == 0 
+                                    ? null
+                                    : <>
+                                        <Accordion.Item eventKey="1">
+                                            <Accordion.Header>
+                                                {"용병 신청 목록 (" + subApplicants.length + "/" + teamInfo.subCount + ")"}
+                                                {currentUserTeamId == teamInfo.teamId
+                                                    ?
+                                                    <Badge className="subApplyBtn" style={{ textAlign: "right" }}
+                                                        onClick={(e) => { fetchClose(e) }}>마감</Badge>
+                                                    :
+                                                    <Badge className="subApplyBtn"
+                                                        onClick={(e) => { subApply(e) }}>신청</Badge>
+                                                }
+                                            </Accordion.Header>
+                                            <Accordion.Body>
+                                                <ListGroup>
+                                                    {
+                                                        subApplicants.length != 0
+                                                            ?
+                                                            subApplicants.map((sub, i) => (
+                                                                <SubListElement status={"waiting"} permmision={teamInfo.teamId == currentUserTeamId} sub={sub} matchTeamId={matchTeamId} key={i} />
 
-                                </ListGroup>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header>{"용병 신청 목록 (" + subApplicants.length + ")"}</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup>
-                                    {
-                                        subApplicants.length != 0
-                                            ?
-                                            subApplicants.map(sub => (
-                                                <SubListElement status={"waiting"} permmision={teamInfo.teamId == "로그인 팀 유저"} sub={sub} />
-                                            ))
-                                            : null
-                                    }
+                                                            ))
+                                                            : null
+                                                    }
+                                                </ListGroup>
+                                            </Accordion.Body>
 
-                                </ ListGroup>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
+
+                                        </Accordion.Item>
+                                    </>
+                            }
+                        </Accordion>
+                    </div>
                 </div>
-            </div>
+            }
             <div className="match-info">
 
             </div>
-        </div>
+        </div >
     );
 
 }
