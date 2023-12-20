@@ -7,26 +7,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import MatchApplicationListElement from './MatchApplicationListElement';
 
 
-function FindAway({ gameId }) {
+function FindAway({ gameId, homeId }) {
   const [open, setOpen] = useState(false);
-  const teamId = useSelector(state => state.loginUser.teamId);
-  const navigate = useNavigate();
   const { option } = useParams();
-  let [currentApplications, setCurrentApplications] = useState([]);
-
-  useEffect(() => {
-    featchApplication();
-  }, [currentApplications.length])
+  const currentUserTeamId = useSelector(state => state.loginUser.teamId);
+  const navigate = useNavigate();
 
   const featchApplication = async () => {
     try {
-      setCurrentApplications(readMatchApplications(gameId));
-      console.log("배열은 날 힘들게 해",currentApplications);
+      setCurrentApplications(await readMatchApplications(gameId));
     } catch (error) {
+      console.log(error);
     }
-    console.log("durlsrk");
-
   }
+
+  useEffect(() => {
+    featchApplication();
+  }, [])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +35,7 @@ function FindAway({ gameId }) {
 
     try {
       await applyToGameAsAway(gameId, matchApplication);
+      navigate(0);
     } catch (error) {
       console.error("findAway 오류: ", error)
     }
@@ -45,6 +43,8 @@ function FindAway({ gameId }) {
     navigate(`/games/${option}/${gameId}`);
 
   }
+
+  let [currentApplications, setCurrentApplications] = useState([]);
 
   const handleFormData = () => {
     const matchApplicationForm = new FormData(document.getElementById('application'));
@@ -61,7 +61,7 @@ function FindAway({ gameId }) {
   return (
     <div style={{ marginTop: "20px" }}>
       {
-        teamId != 0
+        currentUserTeamId != homeId
         &&
         <Button
           onClick={() => setOpen(!open)} variant="success" aria-controls="applicationForm" aria-expanded={open}
@@ -85,22 +85,19 @@ function FindAway({ gameId }) {
         <Accordion className="accordion" defaultActiveKey={['0']}>
           <Accordion.Item eventKey="0">
             <Accordion.Header >신청 팀 목록</Accordion.Header>
-            {
-              currentApplications.length !== 0
-                ?
-                <>
-                  <Accordion.Body>
-                    <ListGroup>
-                      {
-                        currentApplications.map(application => (
-                          <MatchApplicationListElement status={"approval"} matchApplication={application} key={application.teamId} />
-                        ))
-                      }
-                    </ListGroup>
-                  </Accordion.Body>
-                </>
-                : null
-            }
+
+            <Accordion.Body>
+              <ListGroup as="ol">
+                {
+                  currentApplications.length !== 0
+                    ?
+                    currentApplications.map(application => (
+                      <MatchApplicationListElement matchApplication={application} key={application.teamId} gameId={gameId} homeId={homeId} />
+                    ))
+                    : null
+                }
+              </ListGroup>
+            </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       </div>
