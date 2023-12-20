@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import Header from './adminScript/AdminHeader';
 import LeftPanel from './adminScript/LeftPanel';
 import AdminFooter from './adminScript/AdminFooter';
@@ -7,18 +8,11 @@ import '../../styles/admin/AdminMain.css';
 import Memo from '../admin/adminScript/fix_script/Memo';
 import Calendar from '../admin/adminScript/fix_script/Calendar'
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '../../services/UserService';
-//import { getCookie, doLogOut } from '../UserService.js';
-// //import { logOut } from "../../store/loginUser.js";
-// const handleLogout = async () => {
-//   doLogOut(token);
-//   dispatch(logOut());
-//   navigate("/user/sign-in");
-
-// };
-
+import { getCookie, doLogOut } from '../../services/UserService';
+ import LogOut  from '../../store/LoginUser';
 
 const AdminMain = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [statsData, setStatsData] = useState(null);
 
@@ -60,7 +54,9 @@ const AdminMain = () => {
     
     localStorage.removeItem('memos');
  
-    // 로그아웃 로직 추가 (예: 세션 종료)
+   doLogOut("token");
+   dispatch(LogOut());
+   navigate("../../user/sign-in");
   };
 
 

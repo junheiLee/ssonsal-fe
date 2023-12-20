@@ -50,6 +50,8 @@ const EmailSubscriptionButton = () => {
         return;
       }
 
+      const userId = response.data.data.userId
+
       setIsSubscribed(true);
       setSuccess(true);
       console.log('이메일 구독 확인 성공', response.data);

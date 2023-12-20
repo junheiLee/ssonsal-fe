@@ -21,6 +21,8 @@ const EmailUnsubscribeButton = () => {
         },
       });
 
+      const userId = response.data.data.userId
+
       setSuccess(true);
       console.log('이메일 수신 취소 성공', response.data);
     } catch (err) {

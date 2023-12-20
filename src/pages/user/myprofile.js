@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
 import { doLogOut, getCookie } from '../../services/UserService.js';
-import { getCookie } from "../../services/UserService";
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/user/mypage.css';
 import { useDispatch } from "react-redux";
 import { logOut } from "../../store/LoginUser";
-
+import Email from "../admin/EmailSubscriptionButton.js";
+import EmailCancle from "../admin/EmailUnsubscribeButton.js";
+  
 
 const UserComponent = () => {
 
@@ -171,14 +170,14 @@ const UserComponent = () => {
           </Col>
           <Col lg={2} className="userbtn" style={{ height: '50px' }}>
             <Row className="userbbtnn" style={{ height: '50px' }}>
-            {userId == userData.id && (
+              {userId == userData.id && (
                 <Col lg={12} xs={6}>
                   <button onClick={handleLogout}>
                     로그아웃
                   </button>
                 </Col>
               )}
-              { userData.teamId !== 0 && (
+              {userData.teamId !== 0 && (
                 <Col lg={12} xs={6}>
                   <Link to={`/teams/${userData.teamId}`}>
                     팀페이지 가기
@@ -231,6 +230,9 @@ const UserComponent = () => {
             <p>포지션</p>
           </Col>
         </Row>
+        <div>
+    {userData.role === 0 ? <Email /> : userData.role === 2 ? <EmailCancle /> : null}
+       </div>
       </Container>
     </div>
   );
