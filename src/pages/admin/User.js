@@ -17,6 +17,11 @@ const User = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
+  useEffect(() => {
+    fetchData();
+  }, );
+
+
   const fetchData = async () => {
     try {
       const response = await axios.get('/api/admin/user', {
