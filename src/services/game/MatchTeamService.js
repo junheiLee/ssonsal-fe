@@ -4,7 +4,7 @@ import { getCookie } from '../UserService.js';
 export const getMatchTeamInfo = async (matchApplicationId) => {
 
     try {
-        const response = await axios.get(`/match-teams/${matchApplicationId}`, {
+        const response = await axios.get(`/api/match-teams/${matchApplicationId}`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -19,14 +19,14 @@ export const getMatchTeamInfo = async (matchApplicationId) => {
         }
     } catch (error) {
         console.error("getMatchTeamInfo 오류: ", error);
-        console.error("요청 url = ", `/match-teams/${matchApplicationId}`)
+        console.error("요청 url = ", `/api/match-teams/${matchApplicationId}`)
         throw error;
     }
 }
 
 export const applyToGameAsAway = async (gameId, matchApplication) => {
     try {
-        const response = await axios.post(`/games/${gameId}/match-applications`, matchApplication, {
+        const response = await axios.post(`/api/games/${gameId}/match-applications`, matchApplication, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -48,7 +48,7 @@ export const applyToGameAsAway = async (gameId, matchApplication) => {
 export const readMatchApplications = async (gameId) => {
     console.log("readMatchApplications gameId=", gameId)
     try {
-        const response = await axios.get(`/games/${gameId}/match-applications`, {
+        const response = await axios.get(`/api/games/${gameId}/match-applications`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -69,7 +69,7 @@ export const readMatchApplications = async (gameId) => {
 
 export const acceptAwayTeam = async (target) => {
     try {
-        const response = await axios.post(`/match-teams`, target, {
+        const response = await axios.post(`/api/match-teams`, target, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")

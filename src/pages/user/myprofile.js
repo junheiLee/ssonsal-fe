@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../store/LoginUser";
 import Email from "../admin/EmailSubscriptionButton.js";
 import EmailCancle from "../admin/EmailUnsubscribeButton.js";
-  
+
 
 const UserComponent = () => {
   let { userId } = useParams();
@@ -165,7 +165,7 @@ const UserComponent = () => {
             />
             <span className="userTeamName">{userData.teamName}</span>
           </Col>
-          <Col xs={6} lg={7}>
+          <Col>
             <p className="user-name">
               {userData.nickname}{" "}
               <span style={{ marginLeft: "10px", fontSize: "14px" }}>
@@ -196,10 +196,20 @@ const UserComponent = () => {
       <Container className="mt-5 userss">
         <h1>기타 정보</h1>
         <Row className="mb-5">
-          <Col xs={6} lg={4} className="userinfo_detail">
-            <p style={{ fontSize: "25px" }}>{userData.email}</p>
-            <p>이메일</p>
-          </Col>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+
+            <Col xs={6} lg={4} className="userinfo_detail" style={{ marginRight: '10px' }}>
+              <p style={{ fontSize: "25px" }}>{userData.email}</p>
+              <p>이메일</p>
+            </Col>
+            <Col xs={6} lg={4}>
+              <div>
+                {userData.role === 0 && <Email />}
+                {(userData.role === 2 || userData.role === 1) && <EmailCancle />}
+              </div>
+            </Col>
+
+          </div>
           <Col xs={6} lg={4} className="userinfo_detail">
             <p>{userData.gender}</p>
             <p>성별</p>
@@ -237,9 +247,6 @@ const UserComponent = () => {
             <p>포지션</p>
           </Col>
         </Row>
-        <div>
-   <Email />  <EmailCancle /> 
-       </div>
       </Container>
     </div>
   );

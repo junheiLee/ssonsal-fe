@@ -4,7 +4,7 @@ import { getCookie } from '../UserService.js';
 export const getSubs = async (matchApplicationId) => {
 
     try {
-        const response = await axios.get(`/match-teams/${matchApplicationId}/subs`, {
+        const response = await axios.get(`/api/match-teams/${matchApplicationId}/subs`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -29,7 +29,7 @@ export const getSubApplicants = async (matchApplicationId) => {
 
     try {
 
-        const response = await axios.get(`/match-applications/${matchApplicationId}/sub-applicants`, {
+        const response = await axios.get(`/api/match-applications/${matchApplicationId}/sub-applicants`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -51,7 +51,7 @@ export const getSubApplicants = async (matchApplicationId) => {
 
 export const closeSubRecruitment = async (matchApplicationId) => {
     try {
-        const response = await axios.delete(`/match-applications/${matchApplicationId}/sub-applicants`, {
+        const response = await axios.delete(`/api/match-applications/${matchApplicationId}/sub-applicants`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -73,7 +73,7 @@ export const closeSubRecruitment = async (matchApplicationId) => {
 // 용병 신청하기
 export const getSubApply = async (matchApplicationId) => {
     try {
-        const response = await axios.post(`/match-applications/${matchApplicationId}/sub-applicants`, null, {
+        const response = await axios.post(`/api/match-applications/${matchApplicationId}/sub-applicants`, null, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -91,7 +91,7 @@ export const getSubApply = async (matchApplicationId) => {
 
 export const rejectSub = async (matchApplicationId, subApplicantId) => {
     try {
-        const response = await axios.delete(`/match-applications/${matchApplicationId}/sub-applicants/${subApplicantId}`, {
+        const response = await axios.delete(`/api/match-applications/${matchApplicationId}/sub-applicants/${subApplicantId}`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -111,7 +111,7 @@ export const rejectSub = async (matchApplicationId, subApplicantId) => {
 
 export const acceptSub = async (matchApplicationId, values) => {
     try {
-        const response = await axios.post(`/match-teams/${matchApplicationId}/subs`, values, {
+        const response = await axios.post(`/api/match-teams/${matchApplicationId}/subs`, values, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")

@@ -74,10 +74,8 @@ const EmailSubscriptionButton = () => {
           인증 완료
         </button>
       ) : (
-        <div className="subscription-info">
-          <div className="additional-info">
-            <p>Ssonsal에서 제공하는 이벤트 소식을 이메일로 받을 수 있습니다.</p>
-          </div>
+
+
           <button
             className={`subscribe-button ${loading || success ? 'disabled' : ''}`}
             onClick={handleSubscribe}
@@ -85,7 +83,7 @@ const EmailSubscriptionButton = () => {
           >
             {loading ? '처리 중...' : confirming ? '이메일 인증 확인중' : '이메일 인증하기'}
           </button>
-        </div>
+
       )}
       {error && <p className="error-message">{error}</p>}
       {!isSubscribed && success && (

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/rank/Rank.css';
 import '../../styles/team/index.css';
-import { getCookie, doLogOut } from '../../services/UserService';
+import { getCookie } from '../../services/UserService';
 
 const Rank = () => {
   const navigate = useNavigate();

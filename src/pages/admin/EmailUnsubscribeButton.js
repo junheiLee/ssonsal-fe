@@ -37,7 +37,6 @@ const EmailUnsubscribeButton = () => {
     <div className="email-subscription-container">
       <div className="subscription-info">
       <div className="additional-info">
-        <p>SSonsal에서 제공하는 이벤트 이메일 소식을 더 이상 받지 않습니다.</p>
       </div>
       <button
         className={`subscribe-button ${loading || success ? 'disabled' : ''}`}

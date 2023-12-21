@@ -5,7 +5,7 @@ export const getGames = async (option) => {
 
     try {
 
-        const response = await axios.get(`/games/${option}`, {
+        const response = await axios.get(`/api/games/${option}`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -28,7 +28,7 @@ export const getGames = async (option) => {
 export const getGame = async (gameId) => {
 
     try {
-        const response = await axios.get(`/games/${gameId}`, {
+        const response = await axios.get(`/api/games/${gameId}`, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -49,7 +49,7 @@ export const createGame = async (createdGame) => {
 
     console.log("createdGame = ", createdGame);
     try {
-        const response = await axios.post(`/games`, JSON.stringify(createdGame), {
+        const response = await axios.post(`/api/games`, JSON.stringify(createdGame), {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")
@@ -71,7 +71,7 @@ export const enterResult = async (gameId, values) => {
 
     console.log("values=", values);
     try {
-        const response = await axios.post(`/games/${gameId}/result`, values, {
+        const response = await axios.post(`/api/games/${gameId}/result`, values, {
             headers: {
                 "Content-Type": "application/json",
                 ssonToken: getCookie("token")

@@ -10,7 +10,7 @@ import Calendar from '../admin/adminScript/fix_script/Calendar'
 import { useNavigate } from 'react-router-dom';
 import { getCookie, doLogOut } from '../../services/UserService';
  import LogOut  from '../../store/LoginUser';
- import ResetButton from './adminScript/action_script/'; 
+
 
 const AdminMain = () => {
   const dispatch = useDispatch();
@@ -212,7 +212,7 @@ const AdminMain = () => {
             </div>
 
             <div className="row">
-            <ResetButton />
+
               <div className="col-lg-6">
 
                 <Memo />

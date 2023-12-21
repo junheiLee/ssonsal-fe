@@ -44,7 +44,7 @@ const LoginForm = () => {
   const onSubmit = async (formData) => {
     try {
       const response = await axios.post("/api/user/sign-in", formData);
-
+        console.log(response.data.data);
       dispatch(logIn(response.data.data));
       navigate("/user/profile/" + response.data.data.id);
     } catch (error) {
