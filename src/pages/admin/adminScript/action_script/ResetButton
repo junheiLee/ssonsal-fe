@@ -1,0 +1,30 @@
+import { Button } from 'react-bootstrap';
+import axios from 'axios';
+
+const ResetButton = () => {
+  const handleResetClick = async () => {
+    try {
+
+      const response = await axios.get('/api/ranks/reset', {
+        headers: {
+          'Content-Type': 'application/json',
+          ssonToken: getCookie('token'),
+        },
+      });
+
+
+      console.log(response.data);
+
+    } catch (error) {
+      console.error('서버 요청 중 오류 발생:', error);
+
+    }
+  };
+
+  return (
+    <Button variant="primary" onClick={handleResetClick}>
+    </Button>
+  );
+};
+
+export default ResetButton;

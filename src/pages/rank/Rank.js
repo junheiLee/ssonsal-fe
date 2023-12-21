@@ -4,38 +4,93 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/rank/Rank.css';
 import '../../styles/team/index.css';
+import { getCookie, doLogOut } from '../../services/UserService';
 
 const Rank = () => {
-
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
+const [selectedMonth, setSelectedMonth] = useState('');
+  
 
-  useEffect(() => {
-    getRank();
-  }, []);
+useEffect(() => {
+  fetchData();
+}, [selectedMonth]);
 
-  const getRank = async () => {
+
+  const fetchData = async () => {
     try {
-      const response = await axios.get('/api/ranks');
+
+      if (selectedMonth) {
+
+        console.log("하이::"+selectedMonth);
+        const response = await axios.post('/api/ranks/changeMonth',
+        selectedMonth,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              ssonToken: getCookie('token'),
+            },
+          }
+        );
+        console.log("하이a");
         setTeams(response.data.data);
+        console.log(response.data.data);
+      } else {
+
+        const response = await axios.get('/api/ranks/list', {
+          headers: {
+            'Content-Type': 'application/json',
+            ssonToken: getCookie('token'),
+          },
+        });
+        setTeams(response.data.data);
+      }
     } catch (error) {
       console.log(error);
       navigate('/*', { replace: true });
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const handleMonthChange = (e) => {
+    const month = e.target.value;
+    setSelectedMonth(month);
+    console.log("하이 달력은"+month);
+  };
 
   if (loading) {
     return <div style={{ height: '920px' }}></div>;
   }
 
   return (
-<div style={{marginBottom:'100px'}}>
-
-
-        <Container className=" mt-5">
+    <div style={{ marginBottom: '100px' }}>
+      <Container className=" mt-5">
+        <div>
+          <div>
+          <label style={{ fontSize: '20px', marginBottom: '5px' }}>달 선택</label>
+          <select
+  style={{ fontSize: '15px', height: '42px', width: '100%', textAlign: 'center' }}
+  onChange={handleMonthChange}
+  value={selectedMonth}  
+>
+              <option value="">현재 달</option>
+              <option value="1">1월</option>
+              <option value="2">2월</option>
+              <option value="3">3월</option>
+              <option value="4">4월</option>
+              <option value="5">5월</option>
+              <option value="6">6월</option>
+              <option value="7">7월</option>
+              <option value="8">8월</option>
+              <option value="9">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+          </div>
+        </div>
           <div className="listsheader-rank">
             <p><img src={process.env.PUBLIC_URL + '/assets/crown.png'} alt='왕관' /></p>
             <p>

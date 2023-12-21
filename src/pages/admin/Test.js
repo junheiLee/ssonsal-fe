@@ -4,8 +4,8 @@ import Header from './adminScript/AdminHeader';
 import AdminFooter from './adminScript/AdminFooter';
 import Message from './Message';
 import MessageCancle from './MessageCancle';
-import Email from './Email';
-import EmailCancle from './EmailCancle';
+import Email from './EmailSubscriptionButton';
+import EmailCancle from './EmailUnsubscribeButton';
 
 
 const Test = () => {

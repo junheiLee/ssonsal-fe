@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import 'flag-icon-css/css/flag-icon.min.css';
 import DeleteGamesButton from './adminScript/action_script/DeleteGamesButton';
 import '../../styles/admin/AdminMain.css';
+import { getCookie } from '../../services/UserService';
 
 const Game = () => {
   const navigate = useNavigate();
@@ -24,7 +25,13 @@ const Game = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/game");
+      const response = await axios.get("/api/admin/game",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       setGameList(response.data.data.gameList);
     } catch (error) {
      

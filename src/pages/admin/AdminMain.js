@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import Header from './adminScript/AdminHeader';
 import LeftPanel from './adminScript/LeftPanel';
 import AdminFooter from './adminScript/AdminFooter';
@@ -7,17 +8,12 @@ import '../../styles/admin/AdminMain.css';
 import Memo from '../admin/adminScript/fix_script/Memo';
 import Calendar from '../admin/adminScript/fix_script/Calendar'
 import { useNavigate } from 'react-router-dom';
-//import { getCookie, doLogOut } from '../UserService.js';
-// //import { logOut } from "../../store/loginUser.js";
-// const handleLogout = async () => {
-//   doLogOut(token);
-//   dispatch(logOut());
-//   navigate("/user/sign-in");
-
-// };
+import { getCookie, doLogOut } from '../../services/UserService';
+ import LogOut  from '../../store/LoginUser';
 
 
 const AdminMain = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [statsData, setStatsData] = useState(null);
 
@@ -28,7 +24,13 @@ const AdminMain = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/main");
+      const response = await axios.get("/api/admin/main",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
+        },
+      });
       const data = response.data.data;
       setStatsData(data.dailyStats);
       console.log(response.data + "aa");
@@ -53,7 +55,9 @@ const AdminMain = () => {
     
     localStorage.removeItem('memos');
  
-    // 로그아웃 로직 추가 (예: 세션 종료)
+   doLogOut("token");
+   dispatch(LogOut());
+   navigate("../../user/sign-in");
   };
 
 
@@ -208,6 +212,7 @@ const AdminMain = () => {
             </div>
 
             <div className="row">
+
               <div className="col-lg-6">
 
                 <Memo />

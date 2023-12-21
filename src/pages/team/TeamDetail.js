@@ -237,7 +237,7 @@ const Detail = () => {
               <Col lg={6} key={i}>
                 <div className="detailmembers">
                   <p>{i + 1}</p>
-                  <Link to={`/user/${member.id}`}>
+                  <Link to={`/user/profile/${member.id}`}>
                     <span style={{ width: '40%' }}>{member.nickname}</span>
                     <span>{member.age}</span>
                     <span>{member.gender}</span>

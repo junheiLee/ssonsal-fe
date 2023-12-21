@@ -47,7 +47,11 @@ const Header = () => {
                                     <img src={process.env.PUBLIC_URL + '/assets/logo.svg'} alt="쏜살" />
                                 </Link>
                                 {/* logo end */}
-
+                                {
+                                    loginUser.id !== 0
+                                        ?
+                                        <span className='header-team-explan'>[{loginUser.teamName}] {loginUser.nickname}</span> : null
+                                }
                                 {/* menu start */}
                                 <ul className="nav">
                                     <li><Link to="/games/option/all">Game</Link></li>

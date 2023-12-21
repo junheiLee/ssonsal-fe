@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { getCookie } from '../../../../services/UserService';
 
 const EmailPublishButton = () => {
   const [loading, setLoading] = useState(false);
@@ -20,19 +21,23 @@ const EmailPublishButton = () => {
  
   const handlePublishEmail = async () => {
     try {
-      setLoading(true);
-      setError(null);
-
-      const response = await axios.post('/api/management/publishEmail', { emailText: emailContent }, {
+      const response = await axios.post('/api/publishEmail', 
+       {emailContent}
+      ,  {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          ssonToken: getCookie("token")
         },
       });
+    
+      const { data } = response;
 
-      console.log('이메일 발송 성공', response.data);
+    
+      console.log('이메일 발송 성공');
+      alert("메시지 전송 성공");
     } catch (err) {
-      const errorMessage = err.response?.data?.message || '이메일 발송 에러';
-      setError(errorMessage);
+      // const errorMessage = err.response?.data?.message || '이메일 발송 에러';
+      // setError(errorMessage);
       console.error('이메일 발송 에러', err);
     } finally {
       setLoading(false);

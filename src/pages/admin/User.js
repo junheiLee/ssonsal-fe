@@ -19,28 +19,29 @@ const User = () => {
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, selectedUserIds]);
+  }, []);
+
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/admin/user", {
+      const response = await axios.get('/api/admin/user', {
         headers: {
-          "Content-Type": "application/json",
-          ssonToken: getCookie("token")
+          'Content-Type': 'application/json',
+          ssonToken: getCookie('token'),
         },
       });
-      setUserList(response.data.data.userList);
+      
+      const { data } = response;
+      setUserList(data.data.userList);
     } catch (error) {
-    
       if (error.response) {
-        const status = error.response.status;
-        const errorCode = error.response.data.code;
+        const { status, data: { code: errorCode } } = error.response;
 
         if (status === 401 && errorCode === 'USER_NOT_AUTHENTICATION') {
-          alert("로그인이 필요합니다");
+          alert('로그인이 필요합니다');
           navigate('/login', { replace: true });
         } else if (status === 403 && errorCode === 'ADMIN_AUTH_FAILED') {
-          alert("관리자 권한이 없습니다");
+          alert('관리자 권한이 없습니다');
           navigate('/login', { replace: true });
         }
       }
@@ -87,7 +88,7 @@ const User = () => {
                 <div className="card">
                   <div className="card-header">
                     <strong className="card-title">유저 관리</strong>
-                    <EmailPublishButton selectedUserIds={selectedUserIds} />
+                    <EmailPublishButton  />
                   </div>
                   <div className="card-body">
                     <table id="bootstrap-data-table" className="table table-striped table-bordered">

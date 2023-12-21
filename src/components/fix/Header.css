@@ -327,6 +327,14 @@
       background: #fff !important;
     }
   }
+
+  .header-team-explan{
+    float:left;
+    font-size: 18px;
+    margin-top: 26.5px;
+    margin-left: 20px;
+    color:#2a8757;
+  }
   
   @media (min-width: 992px) {
     .header-area .main-nav .nav {
