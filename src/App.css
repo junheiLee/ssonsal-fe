@@ -75,11 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 ul {
   margin-bottom: 0px;
 }
-* 
----------------------------------------------
-global styles
---------------------------------------------- 
-*/
+
 html,
 body {
   background: #fff;
@@ -266,4 +262,13 @@ body {
 
 .margin-bottom-100 {
   margin-bottom: 100px !important;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapper{
+  flex: 1;
 }

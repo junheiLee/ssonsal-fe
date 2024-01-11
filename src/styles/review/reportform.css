@@ -1,0 +1,11 @@
+
+#reason{
+    resize: none;
+    width:80%;
+    height: 200px;
+    padding:20px;
+}
+#report-review{
+    display: block;
+    margin: 0 auto;
+}

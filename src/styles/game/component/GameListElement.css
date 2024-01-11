@@ -1,0 +1,9 @@
+.game-title-top {
+    font-weight: lighter;
+}
+
+.game-title-center{
+    font-size: 18px;
+    font-weight: bold;
+    color: #3c3c3c;
+}
